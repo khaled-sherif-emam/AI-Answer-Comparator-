@@ -2,6 +2,7 @@ import { supabase } from "./auth/supabaseClient"
 import askChatGPT4 from "./api/ChatGPT4.1"
 import askDeepSeekV3 from "./api/DeepSeekV3"
 import askLlama3 from "./api/Llama3.3"
+import { getUserId } from "./utils/storage"
 
 // TASK: update the calls for these functions!
 
@@ -16,7 +17,8 @@ export async function enhancePrompt(prompt) {
     const enhancedPrompt = enhancedPromptAndTokensUsed[0];
     const tokensUsed = enhancedPromptAndTokensUsed[1];
 
-    //deductTokens(tokensUsed) Remove the tokens used from the user's monthly available tokens
+    const user_id = await getUserId();
+    deductTokens(tokensUsed, user_id) 
 
     return enhancedPrompt;
 }
@@ -106,8 +108,6 @@ export async function storeResponses(chat_id, prompt_id, selectedModels, respons
 
     try {
         for (let i = 0; i < selectedModels.length; i++) {
-            // Calculate the total tokens used for prompt+response for each of the selected chatbots
-            calculateTotalTokens(prompt_id, responses[i], selectedModels[i]); 
 
             // Store the response in the database
             const { data, error } = await supabase
@@ -150,6 +150,39 @@ export async function storeTokensUsedPerResponse(chat_id, prompt_id, selectedMod
         }
     }
 
+}
+
+export async function deductTokens(tokensUsed, user_id) {
+
+    console.log(`Deducting tokens from the user's available tokens...`)
+
+    // Fetch the user's current tokens
+    const {data: userData, error: fetchError} = await supabase
+    .from('users')
+    .select('available_tokens')
+    .eq('user_id', user_id)
+    .single()
+    
+    const available_tokens = userData?.available_tokens || 0;
+
+    if (fetchError) {
+        console.log(`Unable to fetch the user's available tokens`, fetchError.message)
+    } else {
+        console.log(`User's available tokens fetched successfully`)
+    }
+
+    // Update the user's available tokens
+    const current_tokens = available_tokens - tokensUsed;
+    const {data, error} = await supabase
+    .from('users')
+    .update({available_tokens: current_tokens})
+    .eq('user_id', user_id)
+
+    if (error) {
+        console.log('Unable to deduct tokens', error.message)
+    } else {
+        console.log('Tokens deducted successfully')
+    }
 }
 
 
@@ -223,15 +256,6 @@ export async function getChatMessages(chat_id) {
   }
 
 
-export async function calculateTotalTokens(prompt_id, response, selectedModel) {
-    
-    // Get prompt
-    const prompt = await getPrompt(prompt_id)
-    console.log("PROMPT:", prompt)
 
-    // CONTINUE
-
-    
-}
 
 // TODO: Add error handling to all the above functions

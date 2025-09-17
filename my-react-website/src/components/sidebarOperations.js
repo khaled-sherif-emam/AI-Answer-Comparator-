@@ -104,6 +104,26 @@ export async function updateChatTitle(chatId, newTitle) {
 
 
 
+// Operations for the Tokens Consumption section
+
+export async function getTokensConsumption(user_id) {
+    console.log('Fetching tokens consumption...')
+
+    const {data, error} = await supabase
+    .from('users')
+    .select('available_tokens, allocated_tokens')
+    .eq('user_id', user_id)
+    .single()
+
+    if (error) {
+        console.log('Unable to fetch tokens consumption', error.message)
+    } else {
+        console.log('Tokens consumption fetched successfully', data)
+        return data
+    }
+
+}
+
 // Operations for the User Info section
 
 export async function getUserName(userId) {
@@ -138,3 +158,4 @@ export async function getSubscriptionPlan(userId) {
     
     return subscriptionPlan;
 }
+

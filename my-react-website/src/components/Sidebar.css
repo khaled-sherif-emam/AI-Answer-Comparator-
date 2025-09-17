@@ -1,5 +1,5 @@
 .sidebar {
-  width: 19vw;
+  width: 279.5px;
   height: 100vh;
   background-color: white;
   color: #333;
@@ -168,7 +168,7 @@
 
 .chat-button.selected {
   border-radius: 10px;
-  background-color: #F0F0F0;
+  background-color: #f2f0f0;
   color: black;
   font-weight: 500;
 }
@@ -283,6 +283,95 @@
   margin-bottom: 70px; /* Additional margin to prevent content from being hidden behind fixed profile */
 }
 
+
+
+/* Token progress bar styles */
+.user-tokens-container {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 230px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  
+  z-index: 1000;
+}
+
+.token-progress-container {
+  width: 100%;
+}
+
+.token-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: black;
+  letter-spacing: 0.01em;
+}
+
+.token-progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #f1f5f9;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 6px 0 8px;
+  position: relative;
+}
+
+.token-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+}
+
+.token-progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.token-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.3) 0%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 3px;
+}
+
+.token-info {
+  text-align: right;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin-top: 1px;
+  letter-spacing: 0.02em;
+}
+
+
+
+
+
+
 /* User profile info section BELOW */
 
 .user-profile-container {
@@ -296,7 +385,7 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 19vw;
+  width: 100%;
   box-sizing: border-box;
   z-index: 1001;
   height: 70px;

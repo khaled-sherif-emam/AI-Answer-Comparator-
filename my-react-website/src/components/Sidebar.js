@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Sidebar.css';
 import { getUserId, storeChatId, getChatId } from '../utils/storage';
 import { createChat, getChats, deleteChat, updateChatTitle, getUserName, getSubscriptionPlan } from './sidebarOperations';
+import { getTokensConsumption } from './sidebarOperations';
 
 const Sidebar = ({ onChatSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +11,7 @@ const Sidebar = ({ onChatSelect }) => {
   const [lastUpdated, setLastUpdated] = useState(Date.now())
   
 
-  const toggleSidebar = (e) => {
+  const toggleSidebar = async (e) => {
     if (e) {
       e.stopPropagation();
     }
@@ -24,6 +25,11 @@ const Sidebar = ({ onChatSelect }) => {
       if (chatId === null) {
         handleNewChat();
       }
+
+      // Fetch the available tokens and allocated tokens to be displayed
+      const tokensInfo = await getTokensConsumption(getUserId());
+      setAvailableTokens(tokensInfo.available_tokens);
+      setAllocatedTokens(tokensInfo.allocated_tokens);
     }
   };
 
@@ -183,7 +189,17 @@ const Sidebar = ({ onChatSelect }) => {
   }, []); // Empty dependency array means this runs once on mount
 
 
+  // Format token numbers with 'M' for millions
+  const formatTokens = (num) => {
+    if (!num && num !== 0) return '0';
+    return num >= 1000000 
+      ? (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'
+      : num.toLocaleString();
+  };
+
   // User info variables
+  const [availableTokens, setAvailableTokens] = useState(null);
+  const [allocatedTokens, setAllocatedTokens] = useState(null);
   const [userName, setUserName] = useState(null);
   const [userInitials, setUserInitials] = useState(null);
   const [userSubscriptionPlan, setUserSubscriptionPlan] = useState(null)
@@ -213,6 +229,12 @@ const Sidebar = ({ onChatSelect }) => {
         const subscriptionPlan = await getSubscriptionPlan(userId);
         setUserSubscriptionPlan(subscriptionPlan);
 
+        // Get the total tokens used by the user and the total tokens allocated
+        const tokensInfo = await getTokensConsumption(userId);
+        setAvailableTokens(tokensInfo.available_tokens);
+        setAllocatedTokens(tokensInfo.allocated_tokens);
+        console.log(`User's available tokens:`, tokensInfo.available_tokens);
+        console.log(`User's allocated tokens:`, tokensInfo.allocated_tokens);
 
 
       } // Add an ELSE part
@@ -326,6 +348,30 @@ const Sidebar = ({ onChatSelect }) => {
                 )}
               </div>
             ))}
+          </div>
+
+          { /* Display the user's token's consumption */ }
+          <div className="user-tokens-container">
+            <div className="token-progress-container">
+              <div className="token-progress-labels">
+                <span>Remaining Tokens</span>
+          
+              </div>
+              <div className="token-progress-bar">
+                <div 
+                  className="token-progress-fill"
+                  style={{
+                    width: `${(availableTokens / allocatedTokens) * 100}%`,
+                    background: availableTokens / allocatedTokens < 0.2 
+                      ? 'linear-gradient(90deg, #ff6b6b, #ff8e8e)' 
+                      : 'linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa)'
+                  }}
+                />
+              </div>
+              <div className="token-info">
+                {formatTokens(availableTokens)} / {formatTokens(allocatedTokens)} tokens remaining
+              </div>
+            </div>
           </div>
 
           { /* Display user info */ }

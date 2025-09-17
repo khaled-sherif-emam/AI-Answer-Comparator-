@@ -12,6 +12,7 @@ import { storePrompt } from './server';
 import { contactAI } from './server';
 import { generateJointAnswer } from './server';
 import { storeResponses } from './server';
+import { deductTokens } from './server';
 import { storeTokensUsedPerResponse } from './server';
 import { getChatId, storeChatId } from './utils/storage';
 import Sidebar from './components/Sidebar';
@@ -142,6 +143,7 @@ function Chat() {
 
   const [selectedModels, setSelectedModels] = useState(['ChatGPT-4.1', 'DeepSeek-V3']);
   const [collaborate, setCollaborate] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const [conversation, setConversation] = useState([])
   const [prompt, setPrompt] = useState('');
@@ -210,24 +212,65 @@ function Chat() {
     {name: 'Llama 3.3 70B Instruct', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Meta_Platforms_Inc._logo_%28cropped%29.svg/2560px-Meta_Platforms_Inc._logo_%28cropped%29.svg.png'},
     {name: 'ChatGPT-5', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
     {name: 'ChatGPT-5 Mini', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
+    {name: 'Claude Opus 4.1', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
+    {name: 'Google Gemini 2.5 Pro', logo: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp'},
+    {name: 'DeepSeek-V3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png'},
+    {name: 'Claude Sonnet 3.7', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
+    {name: 'Claude Haiku 3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
+    {name: 'Google Gemini 2.5 Flash', logo: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp'},
   ];
+
+  const testingModels = [
+    {name: 'ChatGPT-4.1', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
+    {name: 'DeepSeek-V3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png'},
+    {name: 'Llama 3.3 70B Instruct', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Meta_Platforms_Inc._logo_%28cropped%29.svg/2560px-Meta_Platforms_Inc._logo_%28cropped%29.svg.png'},
+  ]
+  const premiumModels = [
+    {name: 'ChatGPT-5', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
+    {name: 'Claude Opus 4.1', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
+    {name: 'Google Gemini 2.5 Pro', logo: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp'},
+    {name: 'DeepSeek-V3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png'},
+  ]
+  const tokenEfficientModels = [
+    {name: 'ChatGPT-5 Mini', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
+    {name: 'Claude Sonnet 3.7', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
+    {name: 'Claude Haiku 3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
+    {name: 'Google Gemini 2.5 Flash', logo: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp'},
+  ]
   
   // Handles the dropdown of the modes selector
   const toggleModelDropdown = () => {
-    setShowModelDropdown(!showModelDropdown);
+    const newState = !showModelDropdown;
+    setShowModelDropdown(newState);
+    if (newState) {
+      setSearchQuery('');
+    }
     // Close other menus when opening model dropdown
     if (showUserMenu) setShowUserMenu(false);
     if (showMoreMenu) setShowMoreMenu(false);
   };
 
   const handleModelSelect = (model) => {
-    if (selectedModels.includes(model)) {  // If model is already selected, remove it
+    if (selectedModels.includes(model)) {
       setSelectedModels(selectedModels.filter(m => m !== model));
     } else {
       setSelectedModels([...selectedModels, model]);
     }
-    console.log(model)
   };
+
+  const filterModels = (models) => {
+    if (!searchQuery.trim()) return models;
+    const query = searchQuery.toLowerCase();
+    return models.filter(model => 
+      model.name.toLowerCase().includes(query) ||
+      model.name.toLowerCase().replace(/\s+/g, '').includes(query)
+    );
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   const handleRemove = (model) => {
     setSelectedModels(selectedModels.filter(m => m !== model));
   }
@@ -313,6 +356,10 @@ function Chat() {
         const jointAnswer = await generateJointAnswer(prompt_id, responses, chatId);
         console.log("Joint answer:", jointAnswer)
       }
+
+      // Deduct the tokens used from the user's balance
+      console.log("Tokens to deduct:", tokensUsed[0])
+      deductTokens(tokensUsed[0], userId)
       
       // Final refresh to show AI responses
       setLastUpdated(Date.now());
@@ -451,46 +498,54 @@ function Chat() {
               {showModelDropdown && (
                 <div className="dropdown-menu" ref={modelDropdownRef}>
                   <div className="model-search-container">
-                    <input className="models-search-bar" type="text" placeholder='Search models...'></input>
+                    <input 
+                      className="models-search-bar" 
+                      type="text" 
+                      placeholder='Search models...' 
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                      onClick={(e) => e.stopPropagation()}
+                    />
                   </div>
-                  <text className='dropdown-text'>Testing models</text>
-                  <div 
-                    className={`dropdown-item ${selectedModels.includes('ChatGPT-4.1') ? 'selected' : ''}`} 
-                    onClick={() => handleModelSelect('ChatGPT-4.1')}
-                  >
-                    <img src="https://pngimg.com/d/chatgpt_PNG1.png" className="select-model-logo"></img>
-                    ChatGPT-4.1
-                  </div>
-                  <div 
-                    className={`dropdown-item ${selectedModels.includes('DeepSeek-V3') ? 'selected' : ''}`} 
-                    onClick={() => handleModelSelect('DeepSeek-V3')}
-                  >
-                    <img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png" className="select-model-logo"></img>
-                    DeepSeek-V3
-                  </div>
-                  <div 
-                    className={`dropdown-item ${selectedModels.includes('Llama 3.3 70B Instruct') ? 'selected' : ''}`} 
-                    onClick={() => handleModelSelect('Llama 3.3 70B Instruct')}
-                  >
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Meta_Platforms_Inc._logo_%28cropped%29.svg/2560px-Meta_Platforms_Inc._logo_%28cropped%29.svg.png" className="select-model-logo"></img>
-                    Llama 3.3 70B Instruct
-                  </div>
-                  <div className="models-class-seperator"></div>
-                  {/* Premium models */}
-                  <text className="dropdown-text">Premium models</text>
-                  <div 
-                    className={`dropdown-item ${selectedModels.includes('ChatGPT-5') ? 'selected' : ''}`} 
-                    onClick={() => handleModelSelect('ChatGPT-5')}
-                  >
-                    <img src="https://pngimg.com/d/chatgpt_PNG1.png" className="select-model-logo"></img>
-                    ChatGPT-5
-                  </div>
-                  <div 
-                    className={`dropdown-item ${selectedModels.includes('ChatGPT-5 Mini') ? 'selected' : ''}`} 
-                    onClick={() => handleModelSelect('ChatGPT-5 Mini')}
-                  >
-                    <img src="https://pngimg.com/d/chatgpt_PNG1.png" className="select-model-logo"></img>
-                    ChatGPT-5 Mini
+                  <div className="dropdown-content">
+                    <div className='dropdown-text'>Testing models</div>
+                    {filterModels(testingModels).map((model, index) => (
+                      <div 
+                        key={`testing-${index}`}
+                        className={`dropdown-item ${selectedModels.includes(model.name) ? 'selected' : ''}`}
+                        style={{ '--item-index': index }}
+                        onClick={() => handleModelSelect(model.name)}
+                      >
+                        <img src={model.logo} className="select-model-logo" alt={model.name} />
+                        {model.name}
+                      </div>
+                    ))}
+                    <div className="models-class-seperator"></div>
+                    <div className='dropdown-text'>Premium models</div>
+                    {filterModels(premiumModels).map((model, index) => (
+                      <div 
+                        key={`premium-${index}`}
+                        className={`dropdown-item ${selectedModels.includes(model.name) ? 'selected' : ''}`}
+                        style={{ '--item-index': index }}
+                        onClick={() => handleModelSelect(model.name)}
+                      >
+                        <img src={model.logo} className="select-model-logo" alt={model.name} />
+                        {model.name}
+                      </div>
+                    ))}
+                    <div className="models-class-seperator"></div>
+                    <div className='dropdown-text'>Token efficient models</div>
+                    {filterModels(tokenEfficientModels).map((model, index) => (
+                      <div 
+                        key={`efficient-${index}`}
+                        className={`dropdown-item ${selectedModels.includes(model.name) ? 'selected' : ''}`}
+                        style={{ '--item-index': index }}
+                        onClick={() => handleModelSelect(model.name)}
+                      >
+                        <img src={model.logo} className="select-model-logo" alt={model.name} />
+                        {model.name}
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
