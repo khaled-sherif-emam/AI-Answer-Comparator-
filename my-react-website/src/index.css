@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.math-block {
+  margin: 1em 0;
+  padding: 0.8em;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 1em;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+.math-block > div {
+  font-family: 'Courier New', monospace;
+  white-space: pre;
+  margin: 0.25em 0;
+  padding: 0.1em 0.5em;
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.math-block > div:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Style for LaTeX boxed content */
+.latex-box {
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  margin: 0.1em 0.2em;
+  border: 1px solid #4a90e2;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+/* Ensure proper display in both light and dark modes */
+[data-theme='dark'] .latex-box {
+  background-color: #2d3748;
+  border-color: #63b3ed;
+  color: #e2e8f0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

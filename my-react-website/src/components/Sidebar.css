@@ -1,0 +1,369 @@
+.sidebar {
+  width: 19vw;
+  height: 100vh;
+  background-color: white;
+  color: #333;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1002; /* Higher than overlay */
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%);
+  padding-bottom: 70px; /* Space for the fixed user profile */
+  box-sizing: border-box;
+  pointer-events: auto; /* Ensure sidebar content is clickable */
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-button {
+  position: fixed;
+  top: 0.5vw;
+  left: 0.5vw;
+  z-index: 1003; /* Highest z-index to stay above everything */
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  transition: all 0.2s ease;
+  pointer-events: auto; /* Ensure button is always clickable */
+}
+
+.sidebar-button:disabled {
+  background: white;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.sidebar-button:not(:disabled):hover {
+  background: #f6f6f6;
+  transform: scale(1.05);
+}
+
+.sidebar-button:active {
+  transform: scale(0.95);
+}
+
+.sidebar-button-svg {
+  width: 17px;
+  height: 17px;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1001; /* Below sidebar but above other content */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none; /* Disable clicks when not active */
+  background-color: transparent;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  pointer-events: auto; /* Enable clicks only when active */
+  cursor: pointer;
+}
+
+.sidebar-content {
+  margin-top: 4.5vw;
+  margin-left: 0.7vw;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar-actions {
+  display: flex;
+  margin: 0.5vw 0;
+  width: 17.7vw;
+  height: 2.3vw;
+  border: 0;
+  background-color: white;
+  flex-direction: row;
+  align-items: center;
+}
+.sidebar-actions-icons {
+  width: 1.2vw;
+  height: 1.2vw;
+}
+.sidebar-actions-text {
+  margin-left: 0.7vw;
+  font-size: 0.9rem;
+}
+.sidebar-actions:hover {
+  background-color: #EAEAEA;
+  border-radius: 10px;
+}
+
+.chats-container {
+  margin-top: 2rem;
+}
+.chats-title {
+  margin-left: 0.3vw;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #8F8F8F;
+}
+
+.chat-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.no-chats-found-container {
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.no-chats-found-label {
+  font-size: 0.86rem;
+  font-weight: 400;
+  color: #2f2f2f;
+}
+
+.chat-button {
+  display: flex;
+  width: 17.7vw;
+  height: 2.5vw;
+  align-items: center;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-align: left;
+  padding-right: 2rem; /* Make space for the menu button */
+}
+
+.chat-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 14vw; /* Adjust based on your sidebar width */
+  display: inline-block;
+}
+
+.chat-button:hover {
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+
+.chat-button.selected {
+  border-radius: 10px;
+  background-color: #F0F0F0;
+  color: black;
+  font-weight: 500;
+}
+
+.edit-chat-button {
+  position: absolute;
+  right: 1.2vw;
+  width: 2vw;
+  height: 1.5vw;
+  background-color: transparent;
+  border: 0;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.chat-button:hover .edit-chat-button,
+.chat-button.selected .edit-chat-button {
+  opacity: 1;
+}
+
+.edit-chat-button-svg {
+  width: 1.5vw;
+  height: 1.5vw;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.edit-chat-button:hover .edit-chat-button-svg {
+  opacity: 1;
+}
+
+/* Wrapper for chat button to position the dropdown menu */
+.chat-button-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Dropdown menu that appears when clicking the three dots */
+.chat-menu-dropdown {
+  position: absolute;
+  right: 1.2vw;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  overflow: hidden;
+  min-width: 120px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px) translateY(-50%); }
+  to { opacity: 1; transform: translateY(0) translateY(-50%); }
+}
+
+.chat-menu-item {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.chat-menu-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* Delete button specific styles */
+.chat-menu-item.delete {
+  color: #e74c3c;  /* Red color for delete action */
+}
+
+.chat-menu-item.delete:hover {
+  background-color: #ffebee;  /* Light red background on hover */
+}
+
+/* Rename Chat Form */
+.chat-rename-form {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.chat-rename-input {
+  width: 100%;
+  height: 2.5vw;
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: inherit;
+  outline: none;
+}
+
+.chats-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  margin-bottom: 70px; /* Additional margin to prevent content from being hidden behind fixed profile */
+}
+
+/* User profile info section BELOW */
+
+.user-profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: white;
+  border-top: 1px solid #eaeaea;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 19vw;
+  box-sizing: border-box;
+  z-index: 1001;
+  height: 70px;
+}
+
+.user-profile-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #F75420;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.user-profile-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.user-profile-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: -10px;
+}
+
+.user-subscription-plan {
+  font-size: 0.7rem;
+  color: #838383;
+  text-transform: capitalize;
+}
+
+.user-actions-button {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.user-actions-button:hover {
+  background-color: #f5f5f5;
+}
+
+.user-actions-button-svg {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.user-actions-button:hover .user-actions-button-svg {
+  opacity: 1;
+}

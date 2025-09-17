@@ -1,0 +1,24 @@
+.signup-container {
+    overflow-y: hidden; /* no vertical scroll */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.signup-title {
+    margin-top: 10vw;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 500;
+    width: 100%;
+}
+.signup-subtitle {
+    margin-top: 1.5vw;
+    width: 25%;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #5d5d5d;
+    line-height: 1.3vw;
+}

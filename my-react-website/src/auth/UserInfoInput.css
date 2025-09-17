@@ -1,0 +1,148 @@
+.user-info-container {
+    overflow-y: hidden; /* no vertical scroll */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.welcome-label {
+        margin-top: 15vw;
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 600;
+        width: 100%;  
+}
+.user-info-subtitle {
+    margin-top: 0.5vw;
+    align-self: center;
+    width: 100%;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #5d5d5d;
+    line-height: 1.3vw;
+}
+
+.user-info-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 27vw;
+    margin: 0 auto;
+}
+.name-input-label {
+    margin-top: 2vw;
+    display: block;
+    font-size: 0.9rem;
+    color: #444;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+}
+
+.name-input {
+    text-align: left;
+    margin-top: 0.2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.name-input input {
+    width: 25vw;
+    height: 3vw;
+    resize: none;
+    border-radius: 30px;
+    border: 1px solid #d4d4d4;
+    padding-left: 1.5vw;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.9rem;
+    color: black;
+    transition: border-color 0.2s ease;
+}
+
+.purpose-select {
+    width: 27vw;
+    height: 3.2vw;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    background-color: white;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+.purpose-select {
+    cursor: pointer;
+}
+
+.purpose-select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.purpose-input {
+    width: 100%;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.purpose-input label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #444;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.submit-button {
+    margin-top: 1.7vw;
+    width: 27vw;
+    height: 3.5vw;
+    background-color: black;
+    border-radius: 30px;
+    border-width: 0;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.9rem;
+    color: white;
+}
+
+
+.error-message {
+    color: #e74c3c;
+    background-color: #fde8e8;
+    padding: 0.8rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: left;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .user-info-card {
+        padding: 1.5rem;
+    }
+    
+    .user-info-card h2 {
+        font-size: 1.5rem;
+    }
+}

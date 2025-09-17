@@ -1,0 +1,115 @@
+/* Logout Confirmation Popup */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { 
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0;
+  }
+  to { 
+    background-color: rgba(0, 0, 0, 0.58);
+    opacity: 1;
+  }
+}
+
+.popup-content {
+  background: white;
+  padding-bottom: 1.5rem;
+  padding-top: 2.5rem;
+  padding-left: 1.8rem;
+  padding-right: 1.8rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  transform: scale(0.95);
+  opacity: 0;
+  animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s forwards;
+}
+
+@keyframes scaleIn {
+  from { 
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.popup-content h3 {
+  margin: 0 0 0.3rem 0;
+  color: #000000;
+  font-size: 1.35rem;
+  font-weight: 600;
+  text-align: center;
+}
+.logout-popup-subtext {
+  margin: 0 0 1.8rem 0;
+  color: #3f3f3f;
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.popup-button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  transform: translateY(0);
+}
+
+.popup-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.popup-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.popup-button.cancel {
+  background-color: #f0f0f0;
+  color: #000000;
+}
+
+.popup-button.cancel:hover {
+  background-color: #e0e0e0;
+}
+
+.popup-button.confirm {
+  background-color: #fc3336;
+  color: white;
+}
+
+.popup-button.confirm:hover {
+  background-color: #fd2c29;
+}
