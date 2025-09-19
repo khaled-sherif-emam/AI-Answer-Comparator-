@@ -1,0 +1,19 @@
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5002';
+
+export const API_ENDPOINTS = {
+  AUTH: {
+    SIGNUP: `${API_BASE_URL}/auth/signup`,
+    LOGIN: `${API_BASE_URL}/auth/login`,
+    USER_INFO: `${API_BASE_URL}/auth/handleUserInfo`,
+    // Add other auth endpoints here
+  },
+  // Add other API endpoints here
+};
+
+export const API_CONFIG = {
+  TIMEOUT: parseInt(process.env.REACT_APP_API_TIMEOUT || '10000', 10),
+  DEFAULT_HEADERS: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+};
