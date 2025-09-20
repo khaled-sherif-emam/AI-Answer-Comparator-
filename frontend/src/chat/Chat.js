@@ -358,7 +358,7 @@ function Chat() {
   const handleChatOperation = async () => {
     if (!prompt.trim()) return; // Don't send empty messages
     
-    setIsGeneratingResponse(true);
+    setIsGeneratingResponse(prevState => true);
     try {
       let chatId = selectedChatId || getChatId();
       console.log("Current chat ID:", chatId);
@@ -430,10 +430,12 @@ function Chat() {
 
   return (
     <div className="main-container" ref={wrapperRef}>
-      <Sidebar onChatSelect={(chatId) => {
-        console.log('User ID::', userId) 
-        setSelectedChatId(chatId);
-        handleDisplayMessages(chatId);
+      <Sidebar 
+        selectedChatId={selectedChatId}
+        onChatSelect={(chatId) => {
+          console.log('Chat selected:', chatId);
+          setSelectedChatId(chatId);
+          handleDisplayMessages(chatId);
       }} />
       
       <div className="header-actions">

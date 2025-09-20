@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5002';
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5002';
 
 export const API_ENDPOINTS = {
   AUTH: {
@@ -8,6 +8,11 @@ export const API_ENDPOINTS = {
     CHECK_SESSION: `${API_BASE_URL}/auth/checkSession`,
     USER_NAME: `${API_BASE_URL}/api/user/handleUserName`,
     // Add other auth endpoints here
+  },
+  SIDEBAR: {
+    GET_CHATS: `${API_BASE_URL}/api/sidebar/getChats`,
+    NEW_CHAT: `${API_BASE_URL}/api/sidebar/newChat`,
+    // Add other sidebar endpoints here
   },
   // Add other API endpoints here
 };

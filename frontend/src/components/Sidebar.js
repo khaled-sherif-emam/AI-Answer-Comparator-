@@ -1,14 +1,34 @@
+import { API_ENDPOINTS, API_BASE_URL } from '../config/api';
 import React, { useState, useEffect, useRef } from 'react';
 import './Sidebar.css';
 import { getUserId, storeChatId, getChatId } from '../utils/storage';
-import { createChat, getChats, deleteChat, updateChatTitle, getUserName, getSubscriptionPlan } from './sidebarOperations';
-import { getTokensConsumption } from './sidebarOperations';
+import { getChats, deleteChat, updateChatTitle, getUserName, getSubscriptionPlan } from './sidebarOperations';
+import { getTokensConsumption, formatTokens } from './sidebarOperations';
 
-const Sidebar = ({ onChatSelect }) => {
+
+const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [chats, setChats] = useState([]);
-  const [selectedChatId, setSelectedChatId] = useState(null);
+  const [internalSelectedChatId, setInternalSelectedChatId] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(Date.now())
+  
+  // Update selected chat when chats are loaded
+  useEffect(() => {
+    if (chats.length > 0 && !internalSelectedChatId) {
+      const firstChatId = String(chats[0].id);
+      setInternalSelectedChatId(firstChatId);
+      if (onChatSelect) {
+        onChatSelect(firstChatId);
+      }
+    }
+  }, [chats, internalSelectedChatId, onChatSelect]);
+
+  // Sync the prop with internal state
+  useEffect(() => {
+    if (propSelectedChatId !== undefined) {
+      setInternalSelectedChatId(propSelectedChatId);
+    }
+  }, [propSelectedChatId]);
   
 
   const toggleSidebar = async (e) => {
@@ -40,24 +60,47 @@ const Sidebar = ({ onChatSelect }) => {
         console.error('No user ID found');
         return;
       }
-      const newChat = await createChat(userId);
-      console.log('New chat created:', newChat);
       
-      if (!newChat || !newChat.id) {
-        throw new Error('Failed to create new chat');
+      // Make API call to create a new chat
+      const response = await fetch(API_ENDPOINTS.SIDEBAR.NEW_CHAT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_id: userId }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create new chat');
+      }
+
+      const result = await response.json();
+      
+      if (!result.success || !result.chat_id) {
+        throw new Error('Invalid response from server');
       }
       
-      // Update the chats list
-      const updatedChats = await getChats(userId);
-      setChats(updatedChats);
+      const newChat = {
+        id: result.chat_id.id,
+        title: result.chat_id.title,
+        created_at: result.chat_id.created_at,
+        updated_at: result.chat_id.updated_at
+      };
       
-      // Update the selected chat ID in local storage and state
-      storeChatId(newChat.id);
-      setSelectedChatId(newChat.id);
+      console.log('New chat created:', newChat);
+      
+      // Update the chats list by adding the new chat to the beginning
+      setChats(prevChats => [newChat, ...prevChats]);
+      
+      // Store the chat ID as a string
+      const chatId = String(newChat.id);
+      storeChatId(chatId);
+      setInternalSelectedChatId(chatId);
       
       // Notify parent component about the new chat selection
       if (onChatSelect) {
-        onChatSelect(newChat.id);
+        onChatSelect(chatId);
       }
       
       // Force a refresh of the messages
@@ -123,41 +166,53 @@ const Sidebar = ({ onChatSelect }) => {
   };
 
   // Handle chat deletion
-  const handleDeleteChat = async (e, chatId) => {
-    e.stopPropagation();
+  const handleDeleteChat = async (chatId) => {
+    if (!window.confirm('Are you sure you want to delete this chat?')) {
+      return;
+    }
+
     try {
-      // Get the index of the chat to delete
-      const oldChats = [...chats];
-      const deletedIndex = chats.findIndex(c => c.id === chatId);
-
-      await deleteChat(chatId);
       const userId = getUserId();
-      const updatedChats = await getChats(userId);
-      setChats(updatedChats);
-      if (selectedChatId === chatId) {   // Check if we're deleting the currently selected chat
-        console.log('Chats to choose from NOW:', chats)
+      if (!userId) {
+        console.error('No user ID found');
+        return;
+      }
 
-        let newSelectedChat = null;
+      const response = await deleteChat(chatId, userId);
+      
+      if (response.success) {
+        // If the deleted chat was selected, clear the selection
+        if (internalSelectedChatId === String(chatId)) {
+          setInternalSelectedChatId(null);
+          storeChatId(null);
+        }
         
-        if (chats.length === 1) { // If this is the last available chat to be deletd
+        // Remove the chat from the list
+        setChats(prevChats => prevChats.filter(chat => chat.id !== chatId));
+        
+        // If there are no more chats, create a new one
+        if (chats.length === 1) { // If this is the last available chat to be deleted
           console.log('Path 1')
-          setSelectedChatId(null);
-          storeChatId(null)
+          setInternalSelectedChatId(null);
+          storeChatId(null);
 
           // Create a new chat
           handleNewChat();
         } else {
-          console.log('Path 2')
-          console.log("Old chats", oldChats)
-          console.log("Deleted index", deletedIndex)
-          newSelectedChat = oldChats[deletedIndex - 1]?.id;
-          if (newSelectedChat === undefined) {
-            newSelectedChat = oldChats[deletedIndex + 1]?.id;
+          // Select another chat if available
+          const newSelectedChat = chats.find(chat => chat.id !== chatId)?.id || null;
+          if (newSelectedChat) {
+            const newChatId = String(newSelectedChat);
+            setInternalSelectedChatId(newChatId);
+            storeChatId(newChatId);
+            if (onChatSelect) {
+              onChatSelect(newChatId);
+            }
+          } else {
+            // If no chats left, clear the selection
+            setInternalSelectedChatId(null);
+            storeChatId(null);
           }
-          console.log('New selected chat:', newSelectedChat)
-          setSelectedChatId(newSelectedChat);
-          storeChatId(newSelectedChat)
-          onChatSelect(newSelectedChat);
         }
       }
     } catch (error) {
@@ -176,10 +231,29 @@ const Sidebar = ({ onChatSelect }) => {
           console.error('No user ID found');
           return;
         }
-        const userChats = await getChats(userId);
-        setChats(userChats || []);
-        console.log('User chats:', userChats);
+
+        // Call the API endpoint to get the user's chats
+        const response = await fetch(`${API_BASE_URL}/api/sidebar/getChats`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ user_id: userId }),
+        });
+
+        const result = await response.json();
+        console.log('API Response:', result);
         
+        // Ensure we always set an array, even if the response is malformed
+        if (result && Array.isArray(result.chats)) {
+          setChats(result.chats);
+        } else if (result && result.success && Array.isArray(result.data)) {
+          // Handle case where data is in result.data
+          setChats(result.data);
+        } else {
+          console.warn('Unexpected response format, defaulting to empty array');
+          setChats([]);
+        }
       } catch (error) {
         console.error('Failed to get chats:', error);
       }
@@ -189,13 +263,12 @@ const Sidebar = ({ onChatSelect }) => {
   }, []); // Empty dependency array means this runs once on mount
 
 
-  // Format token numbers with 'M' for millions
-  const formatTokens = (num) => {
-    if (!num && num !== 0) return '0';
-    return num >= 1000000 
-      ? (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'
-      : num.toLocaleString();
-  };
+
+
+
+
+
+
 
   // User info variables
   const [availableTokens, setAvailableTokens] = useState(null);
@@ -283,7 +356,7 @@ const Sidebar = ({ onChatSelect }) => {
               <p className="no-chats-found-label">No chats found</p>
             </div>
             }
-            {chats.map(chat => (
+            {Array.isArray(chats) && chats.map(chat => (
               <div key={chat.id} className="chat-button-wrapper">
                 {editingChatId === chat.id ? (
                   <form 
@@ -308,12 +381,13 @@ const Sidebar = ({ onChatSelect }) => {
                   </form>
                 ) : (
                   <button 
-                    className={`chat-button ${selectedChatId === chat.id ? 'selected' : ''}`}
+                    className={`chat-button ${internalSelectedChatId === String(chat.id) ? 'selected' : ''}`}
                     onClick={() => {
-                      setSelectedChatId(chat.id);
-                      storeChatId(chat.id);
+                      const chatId = String(chat.id);
+                      setInternalSelectedChatId(chatId);
+                      storeChatId(chatId);
                       if (onChatSelect) {
-                        onChatSelect(chat.id);
+                        onChatSelect(chatId);
                       }
                     }}
                   >

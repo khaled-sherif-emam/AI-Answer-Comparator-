@@ -26,17 +26,20 @@ const Conversation = ({ selectedChatId, lastUpdated, isLoading: isParentLoading,
   const showLoading = isParentLoading || isLoading;
   const messagesEndRef = React.useRef(null);
 
+  // Initialize messages as empty array if null/undefined
+  const safeMessages = Array.isArray(messages) ? messages : [];
+
   // Auto-scroll to bottom when messages change or when chat changes
   useEffect(() => {
     // Only scroll if we have messages and this isn't the initial render
-    if (messages.length > 0) {
+    if (safeMessages.length > 0) {
       const timer = setTimeout(() => {
         scrollToBottom();
       }, 100);
       
       return () => clearTimeout(timer);
     }
-  }, [messages.length, selectedChatId, lastUpdated]);
+  }, [safeMessages.length, selectedChatId, lastUpdated]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -52,10 +55,10 @@ const Conversation = ({ selectedChatId, lastUpdated, isLoading: isParentLoading,
       
       try {
         const messages = await getChatMessages(selectedChatId);
-        setMessages(messages);
+        setMessages(Array.isArray(messages) ? messages : []);
         console.log('Fetched messages:', messages);
 
-        if (messages.length > 0) {
+        if (Array.isArray(messages) && messages.length > 0) {
           setMessagesFound(true);
         } else {
           setMessagesFound(false);
@@ -76,9 +79,11 @@ const Conversation = ({ selectedChatId, lastUpdated, isLoading: isParentLoading,
   useEffect(() => {
     const promptMap = new Map();
     
-    if (messages && messages.length > 0) {
+    const safeMessages = Array.isArray(messages) ? messages : [];
+    
+    if (safeMessages.length > 0) {
       // First, find all prompts and initialize their response arrays
-      messages.forEach(message => {
+      safeMessages.forEach(message => {
         if (!message.model_used) {
           promptMap.set(message.id, {
             ...message,
@@ -88,7 +93,7 @@ const Conversation = ({ selectedChatId, lastUpdated, isLoading: isParentLoading,
       });
       
       // Then, assign responses to their prompts
-      messages.forEach(message => {
+      safeMessages.forEach(message => {
         if (message.model_used && message.prompt_id) {
           const prompt = promptMap.get(message.prompt_id);
           if (prompt) {

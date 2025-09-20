@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./src/routes/authRoutes.js";
 import userInfoRoutes from "./src/routes/userInfoRoutes.js";
+import sidebarRoutes from "./src/routes/sidebarRoutes.js";
 
 const app = express();
 
@@ -50,6 +51,9 @@ app.use('/auth', authRoutes);
 
 // User info routes
 app.use('/api/user', userInfoRoutes);
+
+// Sidebar routes
+app.use('/api/sidebar', sidebarRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5002;
