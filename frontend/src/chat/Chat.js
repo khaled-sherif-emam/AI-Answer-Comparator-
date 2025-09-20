@@ -7,7 +7,6 @@ import { saveUserId, getUserId, removeUserId } from '../utils/storage';
 import Conversation from './Conversation';
 import { useNavigate } from "react-router-dom";
 import { supabase } from '../authentication/supabaseClient';
-import { createChat } from '../components/sidebarOperations';
 import { enhancePrompt } from '../server';
 import { storePrompt } from '../server';
 import { contactAI } from '../server';
@@ -85,6 +84,8 @@ function Chat() {
             if (user_info_data && user_info_data.success) {
               console.log("User name has been successfully fetched:", user_info_data);
               setUserName(user_info_data.name);
+              // Store user name in local storage
+              localStorage.setItem('userName', user_info_data.name);
               // Generate initials for the user's name
               setInitials(getInitials(user_info_data.name));
             } else {
@@ -365,16 +366,16 @@ function Chat() {
       
       if (!chatId) {
         console.log('No chat ID found, creating a new chat...');
-        const newChat = await createChat(userId);
-        chatId = newChat.id;
-        console.log("New chat created with ID:", chatId);
+        //const newChat = await createChat(userId);
+        //chatId = newChat.id;
+        //console.log("New chat created with ID:", chatId);
         
         // Update the selected chat ID in state and storage
-        setSelectedChatId(chatId);
-        storeChatId(chatId);
+        //setSelectedChatId(chatId);
+        //storeChatId(chatId);
         
         // Wait for the state to update
-        await new Promise(resolve => setTimeout(resolve, 100));
+        //await new Promise(resolve => setTimeout(resolve, 100));
       }
       
       console.log('Using chat ID:', chatId);

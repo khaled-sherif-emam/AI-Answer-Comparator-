@@ -2,8 +2,7 @@ import { API_ENDPOINTS, API_BASE_URL } from '../config/api';
 import React, { useState, useEffect, useRef } from 'react';
 import './Sidebar.css';
 import { getUserId, storeChatId, getChatId } from '../utils/storage';
-import { getChats, deleteChat, updateChatTitle, getUserName, getSubscriptionPlan } from './sidebarOperations';
-import { getTokensConsumption, formatTokens } from './sidebarOperations';
+import { formatTokens } from './sidebarOperations';
 
 
 const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
@@ -45,11 +44,6 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
       if (chatId === null) {
         handleNewChat();
       }
-
-      // Fetch the available tokens and allocated tokens to be displayed
-      const tokensInfo = await getTokensConsumption(getUserId());
-      setAvailableTokens(tokensInfo.available_tokens);
-      setAllocatedTokens(tokensInfo.allocated_tokens);
     }
   };
 
@@ -110,7 +104,7 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
     }
   }
 
-  // DELETE CHAT SECTION
+
   // State to track which chat's menu is open
   const [menuOpen, setMenuOpen] = useState(null);
   const [editingChatId, setEditingChatId] = useState(null);
@@ -133,6 +127,7 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
     e.stopPropagation();
     setMenuOpen(menuOpen === chatId ? null : chatId);
   };
+
   // Handle renaming a chat
   const handleRenameChat = async (e, chatId, currentTitle) => {
     e.stopPropagation();
@@ -153,12 +148,35 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
     if (!newChatTitle.trim()) return;
     
     try {
-      await updateChatTitle(chatId, newChatTitle.trim());
-      const userId = getUserId();
-      const updatedChats = await getChats(userId);
-      setChats(updatedChats);
+      const response = await fetch(API_ENDPOINTS.SIDEBAR.RENAME_CHAT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          chat_id: Number(chatId),
+          newName: newChatTitle.trim()
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to rename chat');
+      }
+
+      // Update the chat title in the local state
+      setChats(prevChats => 
+        prevChats.map(chat => 
+          chat.id === chatId 
+            ? { ...chat, title: newChatTitle.trim() } 
+            : chat
+        )
+      );
+      
     } catch (error) {
       console.error('Failed to rename chat:', error);
+      // Optionally show an error message to the user
     } finally {
       setEditingChatId(null);
       setNewChatTitle('');
@@ -166,21 +184,44 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
   };
 
   // Handle chat deletion
-  const handleDeleteChat = async (chatId) => {
-    if (!window.confirm('Are you sure you want to delete this chat?')) {
-      return;
-    }
+  const handleDeleteChat = async (e, chatId) => {
+    e.stopPropagation();
 
     try {
-      const userId = getUserId();
-      if (!userId) {
-        console.error('No user ID found');
-        return;
-      }
-
-      const response = await deleteChat(chatId, userId);
+      console.log("Chat ID to delete:", chatId);
+      console.log("Chat object from state:", chats.find(chat => chat.id === chatId));
       
-      if (response.success) {
+      // Ensure chatId is a number (matching the database type)
+      const cleanChatId = Number(chatId);
+      if (isNaN(cleanChatId)) {
+        throw new Error('Invalid chat ID format');
+      }
+      console.log("Cleaned chat ID:", cleanChatId);
+
+      const payload = {
+        chat_id: cleanChatId  // Send as number
+      };
+      
+      console.log("Sending payload:", payload);
+      
+      const response = await fetch(API_ENDPOINTS.SIDEBAR.DELETE_CHAT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+        credentials: 'include'
+      });
+      
+      console.log("Response status:", response.status);
+      const result = await response.json();
+      console.log("Response data:", result);
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to delete chat');
+      }
+      
+      if (result.success) {
         // If the deleted chat was selected, clear the selection
         if (internalSelectedChatId === String(chatId)) {
           setInternalSelectedChatId(null);
@@ -192,11 +233,9 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
         
         // If there are no more chats, create a new one
         if (chats.length === 1) { // If this is the last available chat to be deleted
-          console.log('Path 1')
+          console.log('Last chat deleted, creating a new one');
           setInternalSelectedChatId(null);
           storeChatId(null);
-
-          // Create a new chat
           handleNewChat();
         } else {
           // Select another chat if available
@@ -285,7 +324,7 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
       
       if (userId) {
         // Get the user's name
-        const userName = await getUserName(userId)
+        const userName = localStorage.getItem('userName');
         console.log(`User's name:`, userName);
         setUserName(userName);
 
@@ -299,15 +338,67 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
         setUserInitials(initials);
 
         // Get the user's subscription plan that they're subscribed to
-        const subscriptionPlan = await getSubscriptionPlan(userId);
-        setUserSubscriptionPlan(subscriptionPlan);
+        try {
+          console.log('Fetching subscription plan for user:', userId);
+          const response = await fetch(`${API_BASE_URL}/api/user/handleGetSubscription`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ user_id: userId }),
+          });
+          
+          const data = await response.json();
+          console.log('Subscription plan response:', data);
+          
+          if (!response.ok) {
+            throw new Error(data.message || 'Failed to fetch subscription plan');
+          }
+          
+          if (!data.success) {
+            throw new Error(data.message || 'Failed to get subscription plan');
+          }
+          
+          console.log(`User's subscription plan:`, data.subscription_plan);
+          setUserSubscriptionPlan(data.subscription_plan || 'free');
+        } catch (error) {
+          console.error('Failed to get subscription plan:', error);
+          // Set a default plan if the request fails
+          setUserSubscriptionPlan('free');
+        }
 
         // Get the total tokens used by the user and the total tokens allocated
-        const tokensInfo = await getTokensConsumption(userId);
-        setAvailableTokens(tokensInfo.available_tokens);
-        setAllocatedTokens(tokensInfo.allocated_tokens);
-        console.log(`User's available tokens:`, tokensInfo.available_tokens);
-        console.log(`User's allocated tokens:`, tokensInfo.allocated_tokens);
+        try {
+          console.log('Fetching user tokens for user:', userId);
+          const response = await fetch(`${API_BASE_URL}/api/user/handleGetUserTokens`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ user_id: userId }),
+          });
+          
+          const data = await response.json();
+          console.log('User tokens response:', data);
+          
+          if (!response.ok) {
+            throw new Error(data.message || 'Failed to fetch user tokens');
+          }
+          
+          if (!data.success) {
+            throw new Error(data.message || 'Failed to get user tokens');
+          }
+          
+          console.log(`User's available tokens:`, data.available_tokens);
+          console.log(`User's allocated tokens:`, data.allocated_tokens);
+          setAvailableTokens(data.available_tokens);
+          setAllocatedTokens(data.allocated_tokens);
+        } catch (error) {
+          console.error('Failed to get user tokens:', error);
+        }
+       
 
 
       } // Add an ELSE part

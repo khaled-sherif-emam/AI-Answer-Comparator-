@@ -50,3 +50,81 @@ export async function createChat(user_id) {
     console.log("Chat created successfully:", data);
     return data;
 }
+
+// Fucntion that deletes an existing chat
+export async function deleteChat(chat_id) {
+    console.log(`Starting deleteChat for chat_id: ${chat_id} (type: ${typeof chat_id})`);
+    
+    try {
+        // First, delete related prompts
+        console.log('Deleting prompts for chat_id:', chat_id);
+        const { error: deletePromptsError, count: promptsDeleted } = await supabase
+            .from('prompts')
+            .delete()
+            .eq('chat_id', chat_id);
+    
+        if (deletePromptsError) {
+            console.error('Error deleting prompts:', deletePromptsError);
+            throw new Error(`Failed to delete prompts: ${deletePromptsError.message}`);
+        }
+        console.log(`Deleted ${promptsDeleted} prompts`);
+        
+        // Then, delete related responses
+        console.log('Deleting responses for chat_id:', chat_id);
+        const { error: deleteResponsesError, count: responsesDeleted } = await supabase
+            .from('responses')
+            .delete()
+            .eq('chat_id', chat_id);
+    
+        if (deleteResponsesError) {
+            console.error('Error deleting responses:', deleteResponsesError);
+            throw new Error(`Failed to delete responses: ${deleteResponsesError.message}`);
+        }
+        console.log(`Deleted ${responsesDeleted} responses`);
+        
+        // Finally, delete the chat itself
+        console.log('Deleting chat with id:', chat_id);
+        const { data, error, count } = await supabase
+            .from('chats')
+            .delete()
+            .eq('id', chat_id);
+        
+        if (error) {
+            console.error('Error deleting chat:', error);
+            throw new Error(`Database error: ${error.message}`);
+        }
+        
+        if (count === 0) {
+            console.error('No chat found with id:', chat_id);
+            throw new Error('Chat not found');
+        }
+        
+        console.log('Successfully deleted chat:', data);
+        return data;
+        
+    } catch (error) {
+        console.error('Error in deleteChat:', error);
+        throw error; // Re-throw to be handled by the controller
+    }
+}
+
+// Function that renames a chat
+export async function renameChat(chat_id, newName) {
+    try {
+        const {data, error} = await supabase
+            .from('chats')
+            .update({title: newName})
+            .eq('id', chat_id);
+
+        if (error) {
+            console.error('Error renaming chat:', error);
+            throw error;
+        }
+
+        console.log('Successfully renamed chat:', data);
+        return data;
+    } catch (error) {
+        console.error('Error renaming chat:', error);
+        throw error;
+    }
+}

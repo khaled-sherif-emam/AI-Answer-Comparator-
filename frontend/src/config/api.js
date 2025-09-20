@@ -7,11 +7,20 @@ export const API_ENDPOINTS = {
     USER_INFO: `${API_BASE_URL}/auth/handleUserInfo`,
     CHECK_SESSION: `${API_BASE_URL}/auth/checkSession`,
     USER_NAME: `${API_BASE_URL}/api/user/handleUserName`,
+    SUBSCRIPTION_PLAN: `${API_BASE_URL}/api/user/handleGetSubscription`,
     // Add other auth endpoints here
+  },
+  USER_INFO: {
+    TOKENS_DATA: `${API_BASE_URL}/api/user/handleGetUserTokens`,
+  },
+  CHAT: {
+    GET_CHAT_MESSAGES: `${API_BASE_URL}/api/chat/getChatMessages`,
   },
   SIDEBAR: {
     GET_CHATS: `${API_BASE_URL}/api/sidebar/getChats`,
     NEW_CHAT: `${API_BASE_URL}/api/sidebar/newChat`,
+    DELETE_CHAT: `${API_BASE_URL}/api/sidebar/deleteChat`,
+    RENAME_CHAT: `${API_BASE_URL}/api/sidebar/renameChat`,
     // Add other sidebar endpoints here
   },
   // Add other API endpoints here

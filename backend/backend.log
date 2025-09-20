@@ -1,0 +1,1311 @@
+⚠️  Node.js 18 and below are deprecated and will no longer be supported in future versions of @supabase/supabase-js. Please upgrade to Node.js 20 or later. For more information, visit: https://github.com/orgs/supabase/discussions/37217
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/login'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/login'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route post '/login'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/signup'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/signup'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route post '/signup'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/handleUserInfo'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/handleUserInfo'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route post '/handleUserInfo'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/checkSession'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/checkSession'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route post '/checkSession'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/handleUserName'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/handleUserName'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route post '/handleUserName'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/getChats'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/getChats'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route post '/getChats'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/newChat'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/newChat'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route post '/newChat'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/deleteChat'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/deleteChat'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route post '/deleteChat'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/test'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/test'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route get '/test'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "x-powered-by" to true
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "etag" to 'weak'
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "etag fn" to [Function: generateETag]
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "env" to 'development'
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "query parser" to 'extended'
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "query parser fn" to [Function: parseExtendedQueryString]
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "subdomain offset" to 2
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "trust proxy" to false
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "trust proxy fn" to [Function: trustNone]
+Sat, 20 Sep 2025 15:19:49 GMT express:application booting in development mode
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "view" to [Function: View]
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "views" to '/Users/khaledemam/Desktop/Website/backend/views'
+Sat, 20 Sep 2025 15:19:49 GMT express:application set "jsonp callback name" to 'callback'
+Sat, 20 Sep 2025 15:19:49 GMT express:router use '/' query
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router use '/' expressInit
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router use '/' corsMiddleware
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '*'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '*'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route options '*'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router use '/' jsonParser
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route get '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Sat, 20 Sep 2025 15:19:49 GMT express:router use '/auth' router
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/auth'
+Sat, 20 Sep 2025 15:19:49 GMT express:router use '/api/user' router
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/api/user'
+Sat, 20 Sep 2025 15:19:49 GMT express:router use '/api/sidebar' router
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/api/sidebar'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route new '/api/test-db'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/api/test-db'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:route get '/api/test-db'
+Sat, 20 Sep 2025 15:19:49 GMT express:router:layer new '/'
+Server is running on port 5002
+Sat, 20 Sep 2025 15:20:00 GMT express:router dispatching GET /api/test-db
+Sat, 20 Sep 2025 15:20:00 GMT express:router query  : /api/test-db
+Sat, 20 Sep 2025 15:20:00 GMT express:router expressInit  : /api/test-db
+Sat, 20 Sep 2025 15:20:00 GMT express:router corsMiddleware  : /api/test-db
+Sat, 20 Sep 2025 15:20:00 GMT express:router jsonParser  : /api/test-db
+Sat, 20 Sep 2025 15:20:00 GMT body-parser:json skip empty body
+Testing database connection...
+SUPABASE_URL: Set
+SUPABASE_ANON_KEY: Set
+Sat, 20 Sep 2025 15:20:10 GMT express:router dispatching POST /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:10 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:10 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:10 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:10 GMT express:router jsonParser  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:10 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:10 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:10 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:10 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:10 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:20:10 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:10 GMT express:router router /api/sidebar : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:10 GMT express:router dispatching POST /deleteChat
+Delete chat request received with body: { chat_id: 271 }
+Attempting to delete chat with ID: 271
+Starting deleteChat for chat_id: 271 (type: number)
+Deleting prompts for chat_id: 271
+Deleted null prompts
+Deleting responses for chat_id: 271
+Deleted null responses
+Deleting chat with id: 271
+Successfully deleted chat: null
+Successfully deleted chat with ID: 271
+Sat, 20 Sep 2025 15:20:39 GMT express:router dispatching OPTIONS /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT express:router query  : /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT express:router expressInit  : /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT express:router corsMiddleware  : /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT express:router dispatching POST /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT express:router query  : /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT express:router expressInit  : /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT express:router corsMiddleware  : /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT express:router jsonParser  : /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:39 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:39 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:39 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:39 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:20:39 GMT express:router trim prefix (/auth) from url /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT express:router router /auth : /auth/login
+Sat, 20 Sep 2025 15:20:39 GMT express:router dispatching POST /login
+Login request received: { body: { email: 'khaled.memam05@gmail.com', password: 'Sherif@357' } }
+Login attempt for email: khaled.memam05@gmail.com
+Calling Login service...
+Attempting to login with email: khaled.memam05@gmail.com
+Supabase auth response: {
+  data: {
+    user: {
+      id: '1a3a7797-e387-4bab-a8d6-9bceaa0cbcd8',
+      aud: 'authenticated',
+      role: 'authenticated',
+      email: 'khaled.memam05@gmail.com',
+      email_confirmed_at: '2025-09-06T12:46:52.749316Z',
+      phone: '',
+      confirmed_at: '2025-09-06T12:46:52.749316Z',
+      last_sign_in_at: '2025-09-20T15:20:40.061170911Z',
+      app_metadata: [Object],
+      user_metadata: [Object],
+      identities: [Array],
+      created_at: '2025-09-06T12:46:52.742071Z',
+      updated_at: '2025-09-20T15:20:40.123537Z',
+      is_anonymous: false
+    },
+    session: {
+      access_token: 'eyJhbGciOiJIUzI1NiIsImtpZCI6InNzVWZhWHZYdkRHcjR6aGgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2x6ZG1oZ2duZ2hqbW1ldXlkZmRyLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiIxYTNhNzc5Ny1lMzg3LTRiYWItYThkNi05YmNlYWEwY2JjZDgiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzU4Mzg1MjQwLCJpYXQiOjE3NTgzODE2NDAsImVtYWlsIjoia2hhbGVkLm1lbWFtMDVAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6ImtoYWxlZC5tZW1hbTA1QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6IjFhM2E3Nzk3LWUzODctNGJhYi1hOGQ2LTliY2VhYTBjYmNkOCJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzU4MzgxNjQwfV0sInNlc3Npb25faWQiOiJjMzQ2ZTNiZS05NGMxLTRkNTktYjYwMi0yYjJmNTI4ZjQ5Y2QiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.wAJHSyRSsuLWoqwGmvR_I3lrlF2zGXebePrnQMja8cI',
+      token_type: 'bearer',
+      expires_in: 3600,
+      expires_at: 1758385240,
+      refresh_token: 'qwjbulgwqbsm',
+      user: [Object],
+      weak_password: null
+    }
+  },
+  error: null
+}
+Login successful for user: 1a3a7797-e387-4bab-a8d6-9bceaa0cbcd8
+Login service response: {
+  user: {
+    id: '1a3a7797-e387-4bab-a8d6-9bceaa0cbcd8',
+    aud: 'authenticated',
+    role: 'authenticated',
+    email: 'khaled.memam05@gmail.com',
+    email_confirmed_at: '2025-09-06T12:46:52.749316Z',
+    phone: '',
+    confirmed_at: '2025-09-06T12:46:52.749316Z',
+    last_sign_in_at: '2025-09-20T15:20:40.061170911Z',
+    app_metadata: { provider: 'email', providers: [Array] },
+    user_metadata: {
+      email: 'khaled.memam05@gmail.com',
+      email_verified: true,
+      phone_verified: false,
+      sub: '1a3a7797-e387-4bab-a8d6-9bceaa0cbcd8'
+    },
+    identities: [ [Object] ],
+    created_at: '2025-09-06T12:46:52.742071Z',
+    updated_at: '2025-09-20T15:20:40.123537Z',
+    is_anonymous: false
+  },
+  session: {
+    access_token: 'eyJhbGciOiJIUzI1NiIsImtpZCI6InNzVWZhWHZYdkRHcjR6aGgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2x6ZG1oZ2duZ2hqbW1ldXlkZmRyLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiIxYTNhNzc5Ny1lMzg3LTRiYWItYThkNi05YmNlYWEwY2JjZDgiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzU4Mzg1MjQwLCJpYXQiOjE3NTgzODE2NDAsImVtYWlsIjoia2hhbGVkLm1lbWFtMDVAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6ImtoYWxlZC5tZW1hbTA1QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6IjFhM2E3Nzk3LWUzODctNGJhYi1hOGQ2LTliY2VhYTBjYmNkOCJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzU4MzgxNjQwfV0sInNlc3Npb25faWQiOiJjMzQ2ZTNiZS05NGMxLTRkNTktYjYwMi0yYjJmNTI4ZjQ5Y2QiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.wAJHSyRSsuLWoqwGmvR_I3lrlF2zGXebePrnQMja8cI',
+    token_type: 'bearer',
+    expires_in: 3600,
+    expires_at: 1758385240,
+    refresh_token: 'qwjbulgwqbsm',
+    user: {
+      id: '1a3a7797-e387-4bab-a8d6-9bceaa0cbcd8',
+      aud: 'authenticated',
+      role: 'authenticated',
+      email: 'khaled.memam05@gmail.com',
+      email_confirmed_at: '2025-09-06T12:46:52.749316Z',
+      phone: '',
+      confirmed_at: '2025-09-06T12:46:52.749316Z',
+      last_sign_in_at: '2025-09-20T15:20:40.061170911Z',
+      app_metadata: [Object],
+      user_metadata: [Object],
+      identities: [Array],
+      created_at: '2025-09-06T12:46:52.742071Z',
+      updated_at: '2025-09-20T15:20:40.123537Z',
+      is_anonymous: false
+    },
+    weak_password: null
+  }
+}
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:20:40 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:40 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:20:40 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching OPTIONS /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:40 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:20:40 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:40 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:20:40 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:20:40 GMT express:router dispatching POST /handleUserName
+User chats have been fetched successfully
+User chats have been fetched successfully
+Sat, 20 Sep 2025 15:20:44 GMT express:router dispatching OPTIONS /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT express:router query  : /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT express:router expressInit  : /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT express:router corsMiddleware  : /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT express:router dispatching POST /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT express:router query  : /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT express:router expressInit  : /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT express:router corsMiddleware  : /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT express:router jsonParser  : /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:44 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:44 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:44 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:44 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:20:44 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT express:router router /api/sidebar : /api/sidebar/newChat
+Sat, 20 Sep 2025 15:20:44 GMT express:router dispatching POST /newChat
+Creating a new chat for user 1a3a7797-e387-4bab-a8d6-9bceaa0cbcd8
+Chat created successfully: {
+  id: 291,
+  title: 'New chat',
+  created_at: '2025-09-20T15:20:44+00:00',
+  updated_at: '2025-09-20T15:20:44'
+}
+Sat, 20 Sep 2025 15:20:46 GMT express:router dispatching OPTIONS /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT express:router dispatching POST /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT express:router jsonParser  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:46 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:46 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:46 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:46 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:20:46 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT express:router router /api/sidebar : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:46 GMT express:router dispatching POST /deleteChat
+Delete chat request received with body: { chat_id: '291' }
+Attempting to delete chat with ID: 291
+Starting deleteChat for chat_id: 291 (type: string)
+Deleting prompts for chat_id: 291
+Deleted null prompts
+Deleting responses for chat_id: 291
+Deleted null responses
+Deleting chat with id: 291
+Successfully deleted chat: null
+Successfully deleted chat with ID: 291
+Sat, 20 Sep 2025 15:20:51 GMT express:router dispatching OPTIONS /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT express:router dispatching POST /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT express:router jsonParser  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:20:51 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:20:51 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:20:51 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:20:51 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:20:51 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT express:router router /api/sidebar : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:20:51 GMT express:router dispatching POST /deleteChat
+Delete chat request received with body: { chat_id: '291' }
+Attempting to delete chat with ID: 291
+Starting deleteChat for chat_id: 291 (type: string)
+Deleting prompts for chat_id: 291
+Deleted null prompts
+Deleting responses for chat_id: 291
+Deleted null responses
+Deleting chat with id: 291
+Successfully deleted chat: null
+Successfully deleted chat with ID: 291
+Sat, 20 Sep 2025 15:21:27 GMT express:router dispatching OPTIONS /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT express:router dispatching POST /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT express:router jsonParser  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:21:27 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:21:27 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:21:27 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:21:27 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:21:27 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT express:router router /api/sidebar : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:27 GMT express:router dispatching POST /deleteChat
+Delete chat request received with body: { chat_id: '291' }
+Attempting to delete chat with ID: 291
+Starting deleteChat for chat_id: 291 (type: string)
+Deleting prompts for chat_id: 291
+Deleted null prompts
+Deleting responses for chat_id: 291
+Deleted null responses
+Deleting chat with id: 291
+Successfully deleted chat: null
+Successfully deleted chat with ID: 291
+Sat, 20 Sep 2025 15:21:57 GMT express:router dispatching OPTIONS /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT express:router dispatching POST /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT express:router jsonParser  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:21:57 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:21:57 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:21:57 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:21:57 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:21:57 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT express:router router /api/sidebar : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:21:57 GMT express:router dispatching POST /deleteChat
+Delete chat request received with body: { chat_id: 291 }
+Attempting to delete chat with ID: 291
+Starting deleteChat for chat_id: 291 (type: number)
+Deleting prompts for chat_id: 291
+Deleted null prompts
+Deleting responses for chat_id: 291
+Deleted null responses
+Deleting chat with id: 291
+Successfully deleted chat: null
+Successfully deleted chat with ID: 291
+Sat, 20 Sep 2025 15:22:01 GMT express:router dispatching POST /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:01 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:01 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:01 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:01 GMT express:router jsonParser  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:01 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:22:01 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:22:01 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:22:01 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:22:01 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:22:01 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:01 GMT express:router router /api/sidebar : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:01 GMT express:router dispatching POST /deleteChat
+Delete chat request received with body: { chat_id: 290 }
+Attempting to delete chat with ID: 290
+Starting deleteChat for chat_id: 290 (type: number)
+Deleting prompts for chat_id: 290
+Deleted null prompts
+Deleting responses for chat_id: 290
+Deleted null responses
+Deleting chat with id: 290
+Successfully deleted chat: null
+Successfully deleted chat with ID: 290
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:22:04 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:22:04 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:22:04 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:22:04 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching OPTIONS /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching OPTIONS /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:22:04 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:22:04 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:22:04 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:22:04 GMT express:router dispatching POST /handleUserName
+User chats have been fetched successfully
+User chats have been fetched successfully
+Sat, 20 Sep 2025 15:22:11 GMT express:router dispatching OPTIONS /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT express:router dispatching POST /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT express:router jsonParser  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:22:11 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:22:11 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:22:11 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:22:11 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:22:11 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT express:router router /api/sidebar : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:11 GMT express:router dispatching POST /deleteChat
+Delete chat request received with body: { chat_id: 289 }
+Attempting to delete chat with ID: 289
+Starting deleteChat for chat_id: 289 (type: number)
+Deleting prompts for chat_id: 289
+Deleted null prompts
+Deleting responses for chat_id: 289
+Deleted null responses
+Deleting chat with id: 289
+Successfully deleted chat: null
+Successfully deleted chat with ID: 289
+Sat, 20 Sep 2025 15:22:13 GMT express:router dispatching POST /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:13 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:13 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:13 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:13 GMT express:router jsonParser  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:13 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:22:13 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:22:13 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:22:13 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:22:13 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:22:13 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:13 GMT express:router router /api/sidebar : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:22:13 GMT express:router dispatching POST /deleteChat
+Delete chat request received with body: { chat_id: 288 }
+Attempting to delete chat with ID: 288
+Starting deleteChat for chat_id: 288 (type: number)
+Deleting prompts for chat_id: 288
+Deleted null prompts
+Deleting responses for chat_id: 288
+Deleted null responses
+Deleting chat with id: 288
+Successfully deleted chat: null
+Successfully deleted chat with ID: 288
+Sat, 20 Sep 2025 15:35:44 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:35:44 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:35:44 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:35:44 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:35:44 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:35:44 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:35:44 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+User chats have been fetched successfully
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:40:09 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:40:09 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:09 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:09 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching OPTIONS /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:40:09 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:09 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:40:09 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:09 GMT express:router dispatching POST /handleUserName
+User chats have been fetched successfully
+User chats have been fetched successfully
+Sat, 20 Sep 2025 15:40:15 GMT express:router dispatching OPTIONS /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT express:router dispatching POST /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT express:router jsonParser  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:15 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:15 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:15 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:15 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:40:15 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT express:router router /api/sidebar : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:40:15 GMT express:router dispatching POST /deleteChat
+Delete chat request received with body: { chat_id: 287 }
+Attempting to delete chat with ID: 287
+Starting deleteChat for chat_id: 287 (type: number)
+Deleting prompts for chat_id: 287
+Deleted null prompts
+Deleting responses for chat_id: 287
+Deleted null responses
+Deleting chat with id: 287
+Successfully deleted chat: null
+Successfully deleted chat with ID: 287
+Sat, 20 Sep 2025 15:40:19 GMT express:router dispatching OPTIONS /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT express:router dispatching POST /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT express:router jsonParser  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:19 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:19 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:19 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:19 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:40:19 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT express:router router /api/sidebar : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:40:19 GMT express:router dispatching POST /renameChat
+Sat, 20 Sep 2025 15:40:19 GMT finalhandler default 404
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:40:22 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:40:22 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:22 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:22 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching OPTIONS /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:40:22 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:40:22 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:40:22 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:40:22 GMT express:router dispatching POST /handleUserName
+User chats have been fetched successfully
+User chats have been fetched successfully
+Sat, 20 Sep 2025 15:55:29 GMT express:router dispatching OPTIONS /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT express:router dispatching POST /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT express:router query  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT express:router expressInit  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT express:router corsMiddleware  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT express:router jsonParser  : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:55:29 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:55:29 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:55:29 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:55:29 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:55:29 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT express:router router /api/sidebar : /api/sidebar/deleteChat
+Sat, 20 Sep 2025 15:55:29 GMT express:router dispatching POST /deleteChat
+Delete chat request received with body: { chat_id: 286 }
+Attempting to delete chat with ID: 286
+Starting deleteChat for chat_id: 286 (type: number)
+Deleting prompts for chat_id: 286
+Deleted null prompts
+Deleting responses for chat_id: 286
+Deleted null responses
+Deleting chat with id: 286
+Successfully deleted chat: null
+Successfully deleted chat with ID: 286
+Sat, 20 Sep 2025 15:55:34 GMT express:router dispatching OPTIONS /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:34 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:35 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:35 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:35 GMT express:router dispatching POST /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:35 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:35 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:35 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:35 GMT express:router jsonParser  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:35 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:55:35 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:55:35 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:55:35 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:55:35 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:55:35 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:35 GMT express:router router /api/sidebar : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:55:35 GMT express:router dispatching POST /renameChat
+Sat, 20 Sep 2025 15:55:35 GMT finalhandler default 404
+Sat, 20 Sep 2025 15:56:44 GMT express:router dispatching OPTIONS /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT express:router dispatching POST /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT express:router jsonParser  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:56:44 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:56:44 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:56:44 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:56:44 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:56:44 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT express:router router /api/sidebar : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:56:44 GMT express:router dispatching POST /renameChat
+Sat, 20 Sep 2025 15:56:44 GMT finalhandler default 404
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:56:53 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:56:53 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:56:53 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:56:53 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching OPTIONS /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:56:53 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:56:53 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:56:53 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:56:53 GMT express:router dispatching POST /handleUserName
+User chats have been fetched successfully
+User chats have been fetched successfully
+Sat, 20 Sep 2025 15:57:02 GMT express:router dispatching OPTIONS /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT express:router dispatching POST /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT express:router jsonParser  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:57:02 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:57:02 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:57:02 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:57:02 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:57:02 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT express:router router /api/sidebar : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:57:02 GMT express:router dispatching POST /renameChat
+Sat, 20 Sep 2025 15:57:02 GMT finalhandler default 404
+Sat, 20 Sep 2025 15:57:23 GMT express:router dispatching HEAD /api/test-db
+Sat, 20 Sep 2025 15:57:23 GMT express:router query  : /api/test-db
+Sat, 20 Sep 2025 15:57:23 GMT express:router expressInit  : /api/test-db
+Sat, 20 Sep 2025 15:57:23 GMT express:router corsMiddleware  : /api/test-db
+Sat, 20 Sep 2025 15:57:23 GMT express:router jsonParser  : /api/test-db
+Sat, 20 Sep 2025 15:57:23 GMT body-parser:json skip empty body
+Testing database connection...
+SUPABASE_URL: Set
+SUPABASE_ANON_KEY: Set
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:58:46 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:58:46 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:46 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:46 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching OPTIONS /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching OPTIONS /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:58:46 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:46 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:58:46 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:46 GMT express:router dispatching POST /handleUserName
+User chats have been fetched successfully
+User chats have been fetched successfully
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching OPTIONS /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching OPTIONS /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:58:55 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router jsonParser  : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:58:55 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router router /api/sidebar : /api/sidebar/getChats
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /getChats
+Getting the user's chats...
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:55 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router jsonParser  : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:55 GMT express:router trim prefix (/auth) from url /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router router /auth : /auth/checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /checkSession
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching OPTIONS /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching OPTIONS /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:58:55 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router query  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router expressInit  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router corsMiddleware  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router jsonParser  : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:58:55 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:58:55 GMT express:router trim prefix (/api/user) from url /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router router /api/user : /api/user/handleUserName
+Sat, 20 Sep 2025 15:58:55 GMT express:router dispatching POST /handleUserName
+User chats have been fetched successfully
+User chats have been fetched successfully
+Sat, 20 Sep 2025 15:59:00 GMT express:router dispatching OPTIONS /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT express:router dispatching POST /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT express:router jsonParser  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 15:59:00 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 15:59:00 GMT body-parser:json read body
+Sat, 20 Sep 2025 15:59:00 GMT body-parser:json parse body
+Sat, 20 Sep 2025 15:59:00 GMT body-parser:json parse json
+Sat, 20 Sep 2025 15:59:00 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT express:router router /api/sidebar : /api/sidebar/renameChat
+Sat, 20 Sep 2025 15:59:00 GMT express:router dispatching POST /renameChat
+Sat, 20 Sep 2025 15:59:00 GMT finalhandler default 404
+Sat, 20 Sep 2025 16:00:40 GMT express:router dispatching POST /api/sidebar/renameChat
+Sat, 20 Sep 2025 16:00:40 GMT express:router query  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 16:00:40 GMT express:router expressInit  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 16:00:40 GMT express:router corsMiddleware  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 16:00:40 GMT express:router jsonParser  : /api/sidebar/renameChat
+Sat, 20 Sep 2025 16:00:40 GMT body-parser:json content-type "application/json"
+Sat, 20 Sep 2025 16:00:40 GMT body-parser:json content-encoding "identity"
+Sat, 20 Sep 2025 16:00:40 GMT body-parser:json read body
+Sat, 20 Sep 2025 16:00:40 GMT body-parser:json parse body
+Sat, 20 Sep 2025 16:00:40 GMT body-parser:json parse json
+Sat, 20 Sep 2025 16:00:40 GMT express:router trim prefix (/api/sidebar) from url /api/sidebar/renameChat
+Sat, 20 Sep 2025 16:00:40 GMT express:router router /api/sidebar : /api/sidebar/renameChat
+Sat, 20 Sep 2025 16:00:40 GMT express:router dispatching POST /renameChat
+Sat, 20 Sep 2025 16:00:40 GMT finalhandler default 404

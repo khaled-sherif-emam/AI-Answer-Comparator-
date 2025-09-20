@@ -4,7 +4,9 @@ import cors from "cors";
 import authRoutes from "./src/routes/authRoutes.js";
 import userInfoRoutes from "./src/routes/userInfoRoutes.js";
 import sidebarRoutes from "./src/routes/sidebarRoutes.js";
+import { router as chatRoutes } from "./src/routes/ChatRoutes.js";
 
+// Initialize app
 const app = express();
 
 // CORS configuration - more permissive for development
@@ -54,6 +56,46 @@ app.use('/api/user', userInfoRoutes);
 
 // Sidebar routes
 app.use('/api/sidebar', sidebarRoutes);
+
+app.use("/api/chat", chatRoutes);
+
+// Test database connection
+app.get('/api/test-db', async (req, res) => {
+  try {
+    console.log('Testing database connection...');
+    console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? 'Set' : 'Not set');
+    console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY ? 'Set' : 'Not set');
+    
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+      throw new Error('Missing Supabase environment variables');
+    }
+    
+    // Try to connect to Supabase
+    const { createClient } = await import('@supabase/supabase-js');
+    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+    
+    // Try a simple query
+    const { data, error } = await supabase
+      .from('chats')
+      .select('*')
+      .limit(1);
+      
+    if (error) throw error;
+    
+    res.json({
+      success: true,
+      message: 'Database connection successful',
+      data: data || []
+    });
+  } catch (error) {
+    console.error('Database test error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Database connection failed',
+      error: error.message
+    });
+  }
+});
 
 // Start server
 const PORT = process.env.PORT || 5002;

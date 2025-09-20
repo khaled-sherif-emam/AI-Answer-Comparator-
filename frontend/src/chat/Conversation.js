@@ -1,7 +1,8 @@
+import { API_ENDPOINTS, API_CONFIG } from '../config/api';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getChatId } from '../utils/storage';
-import { getChatMessages } from '../server';
+
 import './Conversation.css';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
@@ -45,37 +46,63 @@ const Conversation = ({ selectedChatId, lastUpdated, isLoading: isParentLoading,
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Fetch conversation when selectedChatId changes
+  // This function fetches conversation when selectedChatId changes
   useEffect(() => {
     const fetchConversation = async () => {
-      if (!selectedChatId) return;
+      if (!selectedChatId) {
+        setMessages([]);
+        setMessagesFound(false);
+        setIsLoading(false);
+        return;
+      }
       
       setIsLoading(true);
       setError(null);
       
       try {
-        const messages = await getChatMessages(selectedChatId);
-        setMessages(Array.isArray(messages) ? messages : []);
-        console.log('Fetched messages:', messages);
+        const response = await fetch(API_ENDPOINTS.CHAT.GET_CHAT_MESSAGES, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...API_CONFIG.DEFAULT_HEADERS
+          },
+          credentials: 'include',
+          body: JSON.stringify({ chat_id: selectedChatId }),
+        });
 
-        if (Array.isArray(messages) && messages.length > 0) {
-          setMessagesFound(true);
-        } else {
-          setMessagesFound(false);
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || 'Failed to fetch messages');
         }
 
+        const data = await response.json();
+        
+        if (!data.success) {
+          throw new Error(data.message || 'Failed to load conversation');
+        }
+
+        const messages = Array.isArray(data.chat_messages) ? data.chat_messages : [];
+        
+        console.log('Fetched messages:', messages);
+        setMessages(messages);
+        setMessagesFound(messages.length > 0);
+        
+        // Scroll to bottom after messages are updated
+        setTimeout(scrollToBottom, 100);
       } catch (err) {
         console.error('Error fetching messages:', err);
         setError('Failed to load messages');
+        setMessagesFound(false);
+      } finally {
+        setIsLoading(false);
       }
     };
-
 
     fetchConversation();
   }, [selectedChatId, lastUpdated]);
 
 
-  // Group messages by prompt_id whenever messages change
+  // This function groups messages by prompt_id whenever messages change
   useEffect(() => {
     const promptMap = new Map();
     
