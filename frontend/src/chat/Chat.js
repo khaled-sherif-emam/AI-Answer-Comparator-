@@ -1,28 +1,29 @@
+import { API_ENDPOINTS, API_CONFIG } from '../config/api';
+import { getInitials } from '../chat/chatOperations';
+
 import './Chat.css';
 import React, { useState, useEffect, useRef } from "react";
-import { checkSession } from './auth/auth';
-import { saveUserId, getUserId, removeUserId } from './utils/storage';
-import { getUserName } from './auth/auth';
+import { saveUserId, getUserId, removeUserId } from '../utils/storage';
 import Conversation from './Conversation';
 import { useNavigate } from "react-router-dom";
-import { supabase } from './auth/supabaseClient';
-import { createChat } from './components/sidebarOperations';
-import { enhancePrompt } from './server';
-import { storePrompt } from './server';
-import { contactAI } from './server';
-import { generateJointAnswer } from './server';
-import { storeResponses } from './server';
-import { deductTokens } from './server';
-import { storeTokensUsedPerResponse } from './server';
-import { getChatId, storeChatId } from './utils/storage';
-import Sidebar from './components/Sidebar';
-import { Logout } from './auth/auth';
-import LogoutConfirmation from './components/LogoutConfirmation';
+import { supabase } from '../authentication/supabaseClient';
+import { createChat } from '../components/sidebarOperations';
+import { enhancePrompt } from '../server';
+import { storePrompt } from '../server';
+import { contactAI } from '../server';
+import { generateJointAnswer } from '../server';
+import { storeResponses } from '../server';
+import { deductTokens } from '../server';
+import { storeTokensUsedPerResponse } from '../server';
+import { getChatId, storeChatId } from '../utils/storage';
+import Sidebar from '../components/Sidebar';
+import LogoutConfirmation from '../components/LogoutConfirmation';
 
 
 
 function Chat() {
   const [userId, setUserId] = useState('')
+  const [user_name, setUserName] = useState('')
   const [initials, setInitials] = useState('')
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
@@ -41,25 +42,69 @@ function Chat() {
   // Check if the user is already logged in when component mounts ~ For automatic logins
   useEffect(() => {
     const checkUserSession = async () => {
-      const userId = await checkSession();
-      console.log("User ID from checkSession:", userId);
+      console.log("Checking session...");
       
-      if (userId) {
-        console.log("User is logged in with ID:", userId);
-        // Store the user's id in the local storage for future use.
-        saveUserId(userId);
-        setUserId(userId)
-        const initials = await getUserName(userId, 'Initials')
-        setInitials(initials)
-      } else {
-        console.log("No active user session found");
-        // Clear any existing user ID from storage if session is invalid
-        removeUserId();
+      try {
+        // Check if the user is logged in
+        const response = await fetch(API_ENDPOINTS.AUTH.CHECK_SESSION, {
+          method: 'POST',
+          credentials: 'include', // Important for cookies
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        });
+        
+        const data = await response.json();
+        let currentUserId = '';
+        
+        if (data.success) {
+          console.log("User is logged in:", data);
+          currentUserId = data.user_id;
+          setUserId(currentUserId);  // Set the user ID in state
+          saveUserId(currentUserId);  // Save the user ID to localStorage
+
+          try {
+            // Get user's name
+            const user_info_response = await fetch(API_ENDPOINTS.AUTH.USER_NAME, {
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({ user_id: currentUserId })
+            });
+            
+            if (!user_info_response.ok) {
+              throw new Error(`HTTP error! status: ${user_info_response.status}`);
+            }
+            
+            const user_info_data = await user_info_response.json();
+            
+            if (user_info_data && user_info_data.success) {
+              console.log("User name has been successfully fetched:", user_info_data);
+              setUserName(user_info_data.name);
+              // Generate initials for the user's name
+              setInitials(getInitials(user_info_data.name));
+            } else {
+              console.log("Couldn't fetch the user's name:", user_info_data?.message || 'Unknown error');
+            }
+          } catch (error) {
+            console.error("Error fetching user's name:", error);
+          }
+        } else {
+          console.log("User is not logged in");
+        }
+
+      } catch (error) {
+        console.error(`Error fetching the user's name:`, error);
       }
-    };
+    }
     
     checkUserSession();
   }, []);
+
 
   // Load last saved chat when the page loads
   useEffect(() => {
@@ -69,6 +114,8 @@ function Chat() {
       if (chatId) {
         setSelectedChatId(chatId);
         handleDisplayMessages(chatId);
+      } else {
+        console.log("No chat ID found")
       }
     };
     loadLastChat();
@@ -83,8 +130,8 @@ function Chat() {
   }
   const handleLogout = async () => {
     try {
-      await Logout();
-      navigate('/auth/LoginPage');
+      // IMPORTANT: Add logout logic here
+      navigate('/authentication/LoginPage');
       setShowLogoutConfirm(false);
     } catch (error) {
       console.error('Logout error:', error);
@@ -409,7 +456,7 @@ function Chat() {
         { /* Check if the user is logged in... */}
         {!userId ? (
           <>
-          <button className="login-button" onClick={() => navigate("/auth/LoginPage")}>
+          <button className="login-button" onClick={() => navigate("/authentication/LoginPage")}>
             Log in
           </button>
           <button className="signup-button">Sign up for free!</button>

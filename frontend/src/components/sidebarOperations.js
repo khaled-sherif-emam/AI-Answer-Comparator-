@@ -1,4 +1,4 @@
-import { supabase } from "../auth/supabaseClient"
+import { supabase } from "../authentication/supabaseClient"
 
 export async function getChats(userId) {
     console.log('Fetching chats...')

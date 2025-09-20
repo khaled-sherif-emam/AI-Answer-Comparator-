@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getChatId } from './utils/storage';
-import { getChatMessages } from './server';
+import { getChatId } from '../utils/storage';
+import { getChatMessages } from '../server';
 import './Conversation.css';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';

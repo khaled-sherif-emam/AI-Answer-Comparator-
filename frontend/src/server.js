@@ -1,4 +1,4 @@
-import { supabase } from "./auth/supabaseClient"
+import { supabase } from "./authentication/supabaseClient"
 import askChatGPT4 from "./api/ChatGPT4.1"
 import askDeepSeekV3 from "./api/DeepSeekV3"
 import askLlama3 from "./api/Llama3.3"

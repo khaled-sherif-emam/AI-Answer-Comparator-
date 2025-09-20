@@ -2,43 +2,41 @@ import 'dotenv/config';
 import express from "express";
 import cors from "cors";
 import authRoutes from "./src/routes/authRoutes.js";
+import userInfoRoutes from "./src/routes/userInfoRoutes.js";
 
 const app = express();
 
-// CORS configuration
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:3000/'
-];
-
-// Handle preflight requests
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.header('Access-Control-Allow-Credentials', 'true');
-  }
-  
-  // Handle preflight
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  next();
-});
-
-// Regular CORS for all other requests
+// CORS configuration - more permissive for development
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Allow all origins in development
+    if (process.env.NODE_ENV === 'development') {
+      return callback(null, true);
     }
+    
+    // In production, you can restrict to specific origins
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      // Add production domains here
+    ];
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    callback(new Error('Not allowed by CORS'));
   },
-  credentials: true
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
+
+// Handle preflight requests
+app.options('*', cors());
 
 app.use(express.json());
 
@@ -49,6 +47,9 @@ app.get('/', (req, res) => {
 
 // Auth routes
 app.use('/auth', authRoutes);
+
+// User info routes
+app.use('/api/user', userInfoRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5002;

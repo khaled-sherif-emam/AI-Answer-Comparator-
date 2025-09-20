@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { createClient } from '@supabase/supabase-js';
 import jwt from 'jsonwebtoken';
-import { Login, Signup, AddUserInfo } from '../services/authServices.js';
+import { Login, Signup, AddUserInfo, getSession } from '../services/authServices.js';
 
 // Initialize Supabase client with error handling
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
@@ -216,6 +216,33 @@ export async function handleUserInfo(req, res) {
         return res.status(500).json({
             success: false,
             message: 'Failed to update user information',
+            error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+        });
+    }
+}
+
+export async function checkSession(req, res) {
+    try {
+        const user_id = await getSession();
+
+        if (user_id) {
+            return res.status(200).json({
+                success: true,
+                message: 'User is logged in',
+                user_id: user_id
+            });
+        } else {
+            return res.status(401).json({
+                success: false,
+                message: 'User is not logged in'
+            });
+        }
+    
+    } catch (error) {
+        console.error('Error in checkSession:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to check session',
             error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
         });
     }

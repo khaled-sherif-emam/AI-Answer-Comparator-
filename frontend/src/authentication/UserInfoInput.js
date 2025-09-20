@@ -60,7 +60,7 @@ export function UserInfoInput() {
             }
             
             // Redirect to chat after successful submission
-            window.location.href = '/chat';
+            window.location.href = '/chat/Chat';
             
         } catch (error) {
             console.error('Error saving user info:', error.message);

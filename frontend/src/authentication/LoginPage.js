@@ -1,82 +1,61 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
 import { useNavigate, Link } from 'react-router-dom';
-import { saveUserId } from "../utils/storage";
+import { saveUserId } from '../utils/storage';
 import { API_ENDPOINTS, API_CONFIG } from '../config/api';
 
-export default function SignupPage() {
+export default function LoginPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [repeatPassword, setRepeatPassword] = useState('');
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
 
-    // Handle the signup process
-    const handleSignup = async (e) => {
+    // Handle the Login process
+    const handleLogin = async(e) => {
         e.preventDefault();
-        setError(''); // Clear previous errors
-        setIsLoading(true);
-
         try {
-            const response = await fetch(API_ENDPOINTS.AUTH.SIGNUP, {
+            const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
                 method: 'POST',
                 headers: API_CONFIG.DEFAULT_HEADERS,
                 credentials: 'include',
                 mode: 'cors',
                 body: JSON.stringify({ 
                     email: email.trim(), 
-                    password, 
-                    repeatPassword 
+                    password 
                 }),
             });          
 
             const data = await response.json();
 
-            // Check if signup is successful
+            // Check if login is successful
             if (response.ok) {
-                // Store the token in localStorage
                 localStorage.setItem("token", data.token);
                 
                 // Store user ID in localStorage
                 const user_id = data.user.id;
                 saveUserId(user_id);
 
-                // Navigate to the desired page after successful signup
-                navigate("/auth/UserInfoInput");
+                // Navigate to Chats.js
+                navigate("/chat/Chat");
+                
             } else {
-                // Handle API errors
-                const errorMessage = data.message || 'Signup failed. Please try again.';
-                throw new Error(errorMessage);
+            alert(data.message);
             }
+
         } catch (error) {
-            console.error("Signup failed:", error);
-            setError(error.message || 'An error occurred during signup');
-        } finally {
-            setIsLoading(false);
+            console.error("Login failed:", error);
         }
     }
 
     return (
         <div className="login-container">
             <div className="login-card">
-                <h1 className="login-title">Create an Account</h1>
+                <h1 className="login-title">Welcome Back</h1>
                 <p className="login-subtitle">
-                    Sign up to get started with your account
+                    Sign in to access your account and continue your conversations
                 </p>
-                
-                {error && (
-                    <div className="error-message" style={{ 
-                        color: '#e74c3c', 
-                        marginBottom: '20px',
-                        textAlign: 'center',
-                        fontSize: '14px'
-                    }}>
-                        {error}
-                    </div>
-                )}
+                <form onSubmit={handleLogin} className="login-form">
 
-                <form onSubmit={handleSignup} className="login-form">
+                    { /* Email section */ }
                     <div className="form-group">
                         <label htmlFor="email" className="input-label">Email Address</label>
                         <input 
@@ -90,34 +69,25 @@ export default function SignupPage() {
                         />
                     </div>
 
+                    { /* Password section */ }
                     <div className="form-group">
-                        <label htmlFor="password" className="input-label">Password</label>
+                        <div className="password-header">
+                            <label htmlFor="password" className="input-label">Password</label>
+                            <Link to="/forgot-password" className="forgot-password">Forgot password?</Link>
+                        </div>
                         <input 
                             id="password"
                             type="password"
                             className="input-field"
-                            placeholder="Create a password"
+                            placeholder="Enter your password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="confirmPassword" className="input-label">Confirm Password</label>
-                        <input 
-                            id="confirmPassword"
-                            type="password"
-                            className="input-field"
-                            placeholder="Confirm your password"
-                            value={repeatPassword}
-                            onChange={(e) => setRepeatPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-
                     <button type="submit" className="login-button">
-                        Create Account
+                        Continue
                     </button>
 
                     <div className="divider">
@@ -126,10 +96,9 @@ export default function SignupPage() {
                         <span className="divider-line"></span>
                     </div>
 
-
                     <div className="signup-redirect">
-                        Already have an account?{' '}
-                        <Link to="/auth/LoginPage" className="signup-link">Log in</Link>
+                        Don't have an account?{' '}
+                        <Link to="/authentication/SignupPage" className="signup-link">Sign up</Link>
                     </div>
                 </form>
             </div>

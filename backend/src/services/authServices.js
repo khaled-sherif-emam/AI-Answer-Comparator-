@@ -112,6 +112,29 @@ export async function Signup(email, password, repeatPassword) {
 
 
 
+export async function getSession() {
+    try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+            console.error('Error getting session:', error);
+            return null;
+        }
+        
+        if (!session) {
+            console.log('No active session found');
+            return null;
+        }
+        
+        // Return the user ID from the session
+        return session.user.id;
+        
+    } catch (error) {
+        console.error('Error in getSession service:', error);
+        return null;
+    }
+}
+
 export async function AddUserInfo(user_id, full_name, purpose) {
     if (!user_id) {
         throw new Error('User ID is required');
