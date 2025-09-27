@@ -3,7 +3,12 @@
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "memory": 1024,
+        "maxDuration": 10
+      }
     }
   ],
   "routes": [
@@ -21,11 +26,5 @@
     }
   },
   "regions": ["iad1"],
-  "functions": {
-    "server.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
   "public": false
 }
