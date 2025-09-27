@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowRight, FaArrowLeft, FaCheck, FaRobot, FaComments, FaBookmark } from 'react-icons/fa';
+import { FaCheck, FaComments, FaBookmark } from 'react-icons/fa';
 import './WelcomePopup.css';
 
 const slides = [
   {
     title: 'Welcome to Promptly!',
-    description: 'Your personal space to chat with multiple AI assistants in one place. Ask questions, get help with coding, or just have a friendly conversation!',
-    icon: <FaRobot className="feature-icon" />,
+    description: 'Chat with multiple AI assistants in one place. Get homework help, coding assistance, or have a friendly conversation!',
+    icon: null,
     features: [
-      { text: 'Chat with different AI models', icon: <FaComments /> },
-      { text: 'Get instant responses to your questions', icon: <FaCheck /> },
-      { text: 'Save and organize your conversations', icon: <FaBookmark /> }
+      { text: 'Compare multiple AI models side by side', icon: <FaComments /> },
+      { text: 'Detect biases and errors through cross-referencing', icon: <FaCheck /> },
+      { text: 'Get more reliable insights from diverse AI perspectives', icon: <FaBookmark /> }
     ]
   },
   {
     title: 'Get Started',
-    description: 'Join our community of AI enthusiasts and unlock the full potential of AI conversations.',
-    isAuth: true
+    description: 'Sign up today and get 5,000 free credits — or continue as a guest to try it out instantly.',
+    isAuth: true,
+    buttons: [
+      { text: 'Sign Up', variant: 'primary' },
+      { text: 'Log In', variant: 'outline' },
+      { text: 'Continue as Guest', variant: 'text' }
+    ]
   }
 ];
 
@@ -92,31 +97,24 @@ const WelcomePopup = ({ onClose }) => {
                 
                 {slide.isAuth ? (
                   <div className="auth-options">
-                    <div className="auth-option">
-                      <h3>New User?</h3>
-                      <button 
-                        className="auth-button primary"
-                        onClick={() => handleAction('signup')}
-                      >
-                        Create Account
-                      </button>
-                      <p className="credits-note">
-                        Get <strong>5,000 free credits</strong> when you sign up!
-                      </p>
-                    </div>
+                    <button
+                      className="auth-button black"
+                      onClick={() => handleAction('signup')}
+                    >
+                      Sign Up
+                    </button>
                     
-                    <div className="auth-option">
-                      <h3>Returning User?</h3>
-                      <button 
-                        className="auth-button secondary"
-                        onClick={() => handleAction('login')}
-                      >
-                        Log In
-                      </button>
-                    </div>
+                    <button
+                      className="auth-button white"
+                      onClick={() => handleAction('login')}
+                    >
+                      Log In
+                    </button>
                     
                     <div className="divider">
-                      <span>or</span>
+                      <span className="divider-line"></span>
+                      <span className="divider-text">OR</span>
+                      <span className="divider-line"></span>
                     </div>
                     
                     <button 
@@ -131,7 +129,7 @@ const WelcomePopup = ({ onClose }) => {
                     className="welcome-button" 
                     onClick={nextSlide}
                   >
-                    Get Started <FaArrowRight className="button-icon" />
+                    Get Started
                   </button>
                 )}
               </div>
@@ -151,25 +149,6 @@ const WelcomePopup = ({ onClose }) => {
           </div>
           
           {/* Navigation Arrows */}
-          {!isFirstSlide && (
-            <button 
-              className="nav-arrow prev-arrow" 
-              onClick={prevSlide}
-              aria-label="Previous slide"
-            >
-              <FaArrowLeft />
-            </button>
-          )}
-          
-          {!isLastSlide && (
-            <button 
-              className="nav-arrow next-arrow" 
-              onClick={nextSlide}
-              aria-label="Next slide"
-            >
-              <FaArrowRight />
-            </button>
-          )}
         </div>
       </div>
     </div>

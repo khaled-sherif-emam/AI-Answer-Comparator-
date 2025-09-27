@@ -121,17 +121,17 @@ export async function handleStorePrompt(req, res) {
 
 export async function handleContactAI(req, res) {
     try {
-        const { selectedModels, prompt, chat_id } = req.body;
+        const { selectedModels, prompt, chat_id, user_id } = req.body;
 
-        if (!prompt || !chat_id) {
+        if (!prompt || !chat_id || !user_id) {
             return res.status(400).json({
                 success: false,
-                message: 'Prompt and chat ID are required',
-                error: 'Missing prompt or chat ID in request body'
+                message: 'Prompt, chat ID, and user ID are required',
+                error: 'Missing required fields in request body'
             });
         }
 
-        const result = await contactAI(selectedModels, prompt, chat_id);
+        const result = await contactAI(selectedModels, prompt, chat_id, user_id);
 
         if (!result.success) {
             return res.status(404).json({

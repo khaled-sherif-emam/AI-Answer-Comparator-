@@ -1,5 +1,5 @@
 import { supabase } from '../config/supabaseClient.js';
-import { askChatGPT4, askDeepSeekV3 } from './chatbotServices.js';
+import { askChatGPT4, askDeepSeekV3, askChatGPT5Mini, askDeepSeekR1 } from './chatbotServices.js';
 
 // Get all messages for a specific chat
 export async function getChatMessages(chat_id) {
@@ -164,13 +164,41 @@ export async function storePrompt(prompt, chat_id, selectedModels) {
     }
 }
 
-export async function contactAI(selectedModels, prompt_to_answer, chat_id) {
+export async function contactAI(selectedModels, prompt_to_answer, chat_id, user_id) {
     console.log('Sending the prompt to the following models:', selectedModels);    
     let responses = [];
     let tokensUsed = [];
         
     try {
-        if (selectedModels.includes('ChatGPT-4.1')) {
+        // First, check if user has enough tokens
+        const { data: userData, error: fetchError } = await supabase
+            .from('users')
+            .select('available_tokens')
+            .eq('user_id', user_id)
+            .single();
+            
+        if (fetchError) {
+            console.error('Error fetching user token balance:', fetchError);
+            return {
+                success: false,
+                message: 'Failed to verify token balance',
+                error: 'Failed to verify token balance'
+            };
+        }
+        
+        const availableTokens = userData?.available_tokens || 0;
+        
+        // Estimate tokens needed (this is a rough estimate - adjust based on your needs)
+        const estimatedTokensNeeded = prompt_to_answer.length / 4; // Rough estimate of tokens
+        
+        if (availableTokens <= 0) {
+            return {
+                success: false,
+                message: 'Insufficient tokens. Please purchase more tokens to continue.',
+                error: 'Insufficient tokens'
+            };
+        }
+        if (selectedModels.includes('ChatGPT 4o')) {
             const responseAndTokens = await askChatGPT4(prompt_to_answer, chat_id);
             const response = responseAndTokens[0];
             const tokens = responseAndTokens[1];
@@ -185,10 +213,30 @@ export async function contactAI(selectedModels, prompt_to_answer, chat_id) {
             responses.push(response);
             tokensUsed.push(tokens);
         }
+
+        if (selectedModels.includes('ChatGPT-5 Mini')) {   
+            const responseAndTokens = await askChatGPT5Mini(prompt_to_answer, chat_id);
+            const response = responseAndTokens[0];
+            const tokens = responseAndTokens[1];
+            responses.push(response);
+            tokensUsed.push(tokens);
+        }
         
-        // Check if other models are selected but not implemented yet
-        const unsupportedModels = selectedModels.includes('Llama 3.3 70B Instruct') && 'Llama 3.3 70B Instruct';
-        
+        if (selectedModels.includes('ChatGPT-5')) {
+            const responseAndTokens = await askChatGPT5Mini(prompt_to_answer, chat_id);
+            const response = responseAndTokens[0];
+            const tokens = responseAndTokens[1];
+            responses.push(response);
+            tokensUsed.push(tokens);
+        }
+
+        if (selectedModels.includes('DeepSeek R1')) {
+            const responseAndTokens = await askDeepSeekR1(prompt_to_answer, chat_id);
+            const response = responseAndTokens[0];
+            const tokens = responseAndTokens[1];
+            responses.push(response);
+            tokensUsed.push(tokens);
+        }
     
         console.log('AI responses:', responses);
         return {

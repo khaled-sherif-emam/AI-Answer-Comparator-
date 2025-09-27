@@ -1,5 +1,5 @@
 import { supabase } from '../config/supabaseClient.js';
-import { askChatGPT4, askDeepSeekV3 } from '../services/chatbotServices.js';
+import { askChatGPT4, askDeepSeekV3, askChatGPT5Mini, askDeepSeekR1 } from '../services/chatbotServices.js';
 
 export async function getGuestMessages(guestId) {
     try {
@@ -172,13 +172,13 @@ export async function contactAI(guestId, prompt_to_answer, selectedModels) {
     let tokensUsed = [];
     
     try {
-        if (selectedModels.includes('ChatGPT-4.1')) {
-            console.log('Calling ChatGPT-4.1...');
+        if (selectedModels.includes('ChatGPT 4o')) {
+            console.log('Calling ChatGPT 4o...');
             const responseAndTokens = await askChatGPT4(prompt_to_answer, null);
             const response = responseAndTokens[0];
             const tokens = responseAndTokens[1];
             responses.push({
-                model: 'ChatGPT-4.1',
+                model: 'ChatGPT 4o',
                 response: response,
                 tokens: tokens
             });
@@ -199,14 +199,46 @@ export async function contactAI(guestId, prompt_to_answer, selectedModels) {
             tokensUsed.push(tokens);
             console.log('DeepSeek-V3 response received');
         }
-        
-        // Check for unsupported models
-        const unsupportedModels = selectedModels.filter(model => 
-            !['ChatGPT-4.1', 'DeepSeek-V3'].includes(model)
-        );
-        
-        if (unsupportedModels.length > 0) {
-            console.warn('The following models are not supported:', unsupportedModels);
+
+        if (selectedModels.includes('ChatGPT-5 Mini')) {   
+            const responseAndTokens = await askChatGPT5Mini(prompt_to_answer, null);
+            const response = responseAndTokens[0];
+            const tokens = responseAndTokens[1];
+            responses.push({
+                model: 'ChatGPT-5 Mini',
+                response: response,
+                tokens: tokens
+            });
+            tokensUsed.push(tokens);
+            console.log('ChatGPT-5 Mini response received');
+        }
+
+        if (selectedModels.includes('ChatGPT-5')) {
+            console.log('Calling ChatGPT-5 Mini...');
+            const responseAndTokens = await askChatGPT5Mini(prompt_to_answer, null);
+            const response = responseAndTokens[0];
+            const tokens = responseAndTokens[1];
+            responses.push({
+                model: 'ChatGPT-5',
+                response: response,
+                tokens: tokens
+            });
+            tokensUsed.push(tokens);
+            console.log('ChatGPT-5 Mini response received');
+        }
+
+        if (selectedModels.includes('DeepSeek R1')) {
+            console.log('Calling DeepSeek R1...');
+            const responseAndTokens = await askDeepSeekR1(prompt_to_answer, null);
+            const response = responseAndTokens[0];
+            const tokens = responseAndTokens[1];
+            responses.push({
+                model: 'DeepSeek R1',
+                response: response,
+                tokens: tokens
+            });
+            tokensUsed.push(tokens);
+            console.log('DeepSeek R1 response received');
         }
         
         console.log('AI responses:', responses);

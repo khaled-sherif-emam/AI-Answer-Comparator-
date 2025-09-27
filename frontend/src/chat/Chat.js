@@ -7,7 +7,7 @@ import WelcomePopup from '../components/WelcomePopup';
 import { storeGuestId, getGuestId, removeGuestId, hasGuestId } from '../utils/storage';
 import Conversation from './Conversation';
 import { useNavigate } from "react-router-dom";
-import { deductTokens, deductGuestTokens } from '../server';
+import { deductTokens, deductGuestTokens, checkGuestTokens, checkUserTokens } from '../server';
 import { getChatId, storeChatId } from '../utils/storage';
 import Sidebar from '../components/Sidebar';
 import LogoutConfirmation from '../components/LogoutConfirmation';
@@ -28,6 +28,43 @@ function Chat() {
   const [isGeneratingResponse, setIsGeneratingResponse] = useState(false);
   const [showModelDropdown, setShowModelDropdown] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showError, setShowError] = useState(false);
+  
+  // Show error message to user
+  const showNetworkError = (error) => {
+    let message = 'An error occurred. Please try again.';
+    
+    if (!navigator.onLine) {
+      message = 'You are offline. Please check your internet connection.';
+    } else if (error.message) {
+      if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
+        message = 'Unable to connect to the server. Please check your internet connection.';
+      } else if (error.message.includes('timeout')) {
+        message = 'The request timed out. Please try again.';
+      } else if (error.status === 401) {
+        message = 'Your session has expired. Please log in again.';
+        removeUserId();
+        removeChatId();
+        navigate('/authentication/LoginPage');
+      } else if (error.status === 429) {
+        message = 'Too many requests. Please wait a moment before trying again.';
+      } else if (error.status >= 500) {
+        message = 'Server error. Please try again later.';
+      } else {
+        message = error.message || message;
+      }
+    }
+    
+    setErrorMessage(message);
+    setShowError(true);
+    
+    // Auto-hide error after 5 seconds
+    setTimeout(() => {
+      setShowError(false);
+      setErrorMessage('');
+    }, 5000);
+  };
   
   // Refs for clicking outside drop down menus
   const wrapperRef = useRef(null);
@@ -213,8 +250,7 @@ function Chat() {
   // Navigation
   const navigate = useNavigate();
 
-  const [selectedModels, setSelectedModels] = useState(['ChatGPT-4.1', 'DeepSeek-V3']);
-  const [collaborate, setCollaborate] = useState(false);
+  const [selectedModels, setSelectedModels] = useState(['ChatGPT 4o', 'DeepSeek-V3']);
   const [searchQuery, setSearchQuery] = useState('');
 
   const [conversation, setConversation] = useState([])
@@ -320,36 +356,23 @@ function Chat() {
   const [response, setResponse] = useState('')
 
   
-  const models = [
-    {name: 'ChatGPT-4.1', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
+  const [models, setModels] = useState([
+    {name: 'ChatGPT 4o', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
     {name: 'DeepSeek-V3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png'},
     {name: 'Llama 3.3 70B Instruct', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Meta_Platforms_Inc._logo_%28cropped%29.svg/2560px-Meta_Platforms_Inc._logo_%28cropped%29.svg.png'},
     {name: 'ChatGPT-5', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
-    {name: 'ChatGPT-5 Mini', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
+    {name: 'DeepSeek R1', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png'},
     {name: 'Claude Opus 4.1', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
-    {name: 'Google Gemini 2.5 Pro', logo: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp'},
-    {name: 'DeepSeek-V3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png'},
-    {name: 'Claude Sonnet 3.7', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
-    {name: 'Claude Haiku 3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
-    {name: 'Google Gemini 2.5 Flash', logo: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp'},
-  ];
+    {name: 'Google Gemini 2.5 Pro', logo: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp'}
+  ]);
 
-  const testingModels = [
-    {name: 'ChatGPT-4.1', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
-    {name: 'DeepSeek-V3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png'},
-    {name: 'Llama 3.3 70B Instruct', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Meta_Platforms_Inc._logo_%28cropped%29.svg/2560px-Meta_Platforms_Inc._logo_%28cropped%29.svg.png'},
-  ]
-  const premiumModels = [
+  const availableModels = [
     {name: 'ChatGPT-5', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
-    {name: 'Claude Opus 4.1', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
-    {name: 'Google Gemini 2.5 Pro', logo: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp'},
-    {name: 'DeepSeek-V3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png'},
-  ]
-  const tokenEfficientModels = [
+    {name: 'ChatGPT 4o', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
     {name: 'ChatGPT-5 Mini', logo: 'https://pngimg.com/d/chatgpt_PNG1.png'},
-    {name: 'Claude Sonnet 3.7', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
-    {name: 'Claude Haiku 3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/claude-color.png'},
-    {name: 'Google Gemini 2.5 Flash', logo: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp'},
+    {name: 'DeepSeek-V3', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png'},
+    {name: 'DeepSeek R1', logo: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png'},
+    {name: 'Llama 3.3 70B Instruct', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Meta_Platforms_Inc._logo_%28cropped%29.svg/2560px-Meta_Platforms_Inc._logo_%28cropped%29.svg.png'},
   ]
   
   // Handles the dropdown of the modes selector
@@ -385,12 +408,8 @@ function Chat() {
     setSearchQuery(e.target.value);
   };
 
-  const handleRemove = (model) => {
+  const handleRemoveModel = (model) => {
     setSelectedModels(selectedModels.filter(m => m !== model));
-  }
-
-  const handleCollaborateChange = (e) => {
-    setCollaborate(e.target.checked)
   }
 
   // Handles the display of the messages between the user and AI for a specific chat
@@ -444,16 +463,15 @@ function Chat() {
 
   // Handle the chat operation when the user clicks on the send button
   const handleChatOperation = async () => {
-
-    if (!userId) {
-      handleGuestChatOperation();
-      return;
-    }
-
-    if (!prompt.trim()) return; // Don't send empty messages
-    
-    setIsGeneratingResponse(prevState => true);
     try {
+      if (!userId) {
+        await handleGuestChatOperation();
+        return;
+      }
+
+      if (!prompt.trim()) return; // Don't send empty messages
+      
+      setIsGeneratingResponse(true);
       let chatId = selectedChatId || getChatId();
       console.log("Current chat ID:", chatId);
       
@@ -520,11 +538,32 @@ function Chat() {
       // Small delay to ensure UI updates
       await new Promise(resolve => setTimeout(resolve, 50));
       
+      // Check if user has enough tokens
+      console.log('Checking token balance...');
+      let hasEnoughTokens = false;
+      
+      if (isGuest) {
+        hasEnoughTokens = await checkGuestTokens(guestId);
+      } else {
+        hasEnoughTokens = await checkUserTokens(userId);
+      }
+      
+      if (!hasEnoughTokens) {
+        showNetworkError({
+          message: 'Insufficient Tokens',
+          description: 'You have run out of tokens. Please sign up for a free account or purchase more tokens to continue chatting.',
+          type: 'warning'
+        });
+        setIsGeneratingResponse(false);
+        return;
+      }
+      
       // Send prompt to the selected AI models through the ContactAI() function
       console.log('Sending request to:', API_ENDPOINTS.CHAT.CONTACT_AI);
       console.log('Selected models:', selectedModels);
       console.log('Prompt:', prompt);
       console.log('Chat ID:', chatId);
+      console.log('User ID:', userId);
       
       let responses = [];
       let tokensUsed = [];
@@ -540,18 +579,36 @@ function Chat() {
             selectedModels,
             prompt,
             chat_id: chatId,
+            user_id: userId,
           }),
         });
 
         if (!AIResponses.ok) {
-          const errorText = await AIResponses.text();
-          throw new Error(`HTTP error! status: ${AIResponses.status}, ${errorText}`);
+          const errorData = await AIResponses.json().catch(() => ({}));
+          const errorMessage = errorData.message || 'Failed to process your request';
+          const errorDetails = AIResponses.status === 400 ? 'Please check your input and try again.' :
+                            AIResponses.status === 401 ? 'Your session may have expired. Please refresh the page and try again.' :
+                            AIResponses.status === 403 ? 'You do not have permission to perform this action.' :
+                            'Please try again in a few moments.';
+          
+          showNetworkError({
+            message: `Error (${AIResponses.status}): ${errorMessage}`,
+            description: errorDetails,
+            type: 'error'
+          });
+          
+          throw new Error(`HTTP error! status: ${AIResponses.status}, ${errorMessage}`);
         }
 
         const responseData = await AIResponses.json();
         
         if (!responseData || !responseData.success) {
           console.error('Error response from server:', responseData);
+          showNetworkError({
+            message: 'Request Failed',
+            description: responseData.message || 'The server could not process your request. Please try again.',
+            type: 'error'
+          });
           throw new Error(responseData?.message || 'Failed to get AI responses');
         }
 
@@ -603,9 +660,18 @@ function Chat() {
       
     } catch (error) {
       console.error('Error in handleChatOperation:', error);
-    } finally {
-      setIsGeneratingResponse(false);
-    }  
+        
+        // Only show error if it's not already shown in the specific error handlers
+        if (!error.handled) {
+          showNetworkError({
+            message: 'Something Went Wrong',
+            description: 'We encountered an unexpected error while processing your request. Our team has been notified.',
+            type: 'error'
+          });
+        }
+      } finally {
+        setIsGeneratingResponse(false);
+      }
   }
 
 
@@ -613,11 +679,11 @@ function Chat() {
   const handleGuestChatOperation = async () => {
     if (!prompt.trim()) return; // Don't send empty messages
     
-    setIsGeneratingResponse(prevState => true);
-
-    console.log('Storing prompt for guest');
+    setIsGeneratingResponse(true);
 
     try {
+      console.log('Storing prompt for guest');
+      
       // Store the guests prompt in the guest_prompts table
       const storeGuestPromptResponse = await fetch(API_ENDPOINTS.GUEST_CHAT.STORE_GUEST_PROMPT, {
         method: 'POST',
@@ -683,6 +749,16 @@ function Chat() {
       // Small delay to ensure UI updates
       await new Promise(resolve => setTimeout(resolve, 50));
       
+      // Check if guest has enough tokens
+      console.log('Checking guest token balance...');
+      const hasEnoughTokens = await checkGuestTokens(guestId);
+      
+      if (!hasEnoughTokens) {
+        alert('Insufficient tokens. Please sign up for a free account to get more tokens.');
+        setIsGeneratingResponse(false);
+        return;
+      }
+      
       // Contact AI to get responses
       console.log('Sending request to CONTACT_AI endpoint:', {
         url: API_ENDPOINTS.GUEST_CHAT.CONTACT_AI,
@@ -690,6 +766,8 @@ function Chat() {
         prompt_to_answer: prompt_to_answer, // Use the saved prompt variable
         selected_models: selectedModels
       });
+
+      console.log('Selected models:', selectedModels);
       
       const contactAIResponse = await fetch(API_ENDPOINTS.GUEST_CHAT.CONTACT_AI, {
         method: 'POST',
@@ -760,6 +838,8 @@ function Chat() {
       
     } catch (error) {
       console.error('Error in handleGuestChatOperation:', error);
+      showNetworkError(error);
+      throw error; // Re-throw to be handled by the caller
     } finally {
       setIsGeneratingResponse(false);
     }
@@ -771,12 +851,27 @@ function Chat() {
       handleChatOperation();
       setPrompt(""); // clear input
     }
-    console.log("KEYDOWN IS BEING HANDLED")
-  }
+    console.log("KEYDOWN IS BEING HANDLED");
+  };
   
 
   return (
     <div className="main-container" ref={wrapperRef}>
+      {/* Error Notification */}
+      {showError && (
+        <div className="error-notification">
+          <div className="error-content">
+            <span className="error-message">{errorMessage}</span>
+            <button 
+              className="error-close" 
+              onClick={() => setShowError(false)}
+              aria-label="Close error message"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
       <Sidebar 
         selectedChatId={selectedChatId}
         onChatSelect={(chatId) => {
@@ -824,8 +919,6 @@ function Chat() {
             </button>
             {showUserMenu && (
               <div className="user-menu">
-                <button className="user-menu-item">Profile</button>
-                <button className="user-menu-item">Settings</button>
                 <button className="user-menu-item delete" onClick={() => setShowLogoutConfirm(true)}>Logout</button>
               </div>
             )}
@@ -881,8 +974,8 @@ function Chat() {
               { /* Select Model Button - Dropdown menu */}
               <button className="model-select-button"onClick={toggleModelDropdown}>
                 <img className="arrow-up" src="https://cdn-icons-png.flaticon.com/512/156/156318.png"></img>
-                {selectedModels.map((modell, index) => {
-                  const model = models.find(m => m.name === modell);
+                {selectedModels.map((modelName, index) => {
+                  const model = models.find(m => m.name === modelName);
                   return (
                     <div className="selected-models-logos">
                       <div className="model-logo-container">
@@ -906,36 +999,10 @@ function Chat() {
                     />
                   </div>
                   <div className="dropdown-content">
-                    <div className='dropdown-text'>Testing models</div>
-                    {filterModels(testingModels).map((model, index) => (
+                    <div className='dropdown-text'>Available models</div>
+                    {filterModels(availableModels).map((model, index) => (
                       <div 
                         key={`testing-${index}`}
-                        className={`dropdown-item ${selectedModels.includes(model.name) ? 'selected' : ''}`}
-                        style={{ '--item-index': index }}
-                        onClick={() => handleModelSelect(model.name)}
-                      >
-                        <img src={model.logo} className="select-model-logo" alt={model.name} />
-                        {model.name}
-                      </div>
-                    ))}
-                    <div className="models-class-seperator"></div>
-                    <div className='dropdown-text'>Premium models</div>
-                    {filterModels(premiumModels).map((model, index) => (
-                      <div 
-                        key={`premium-${index}`}
-                        className={`dropdown-item ${selectedModels.includes(model.name) ? 'selected' : ''}`}
-                        style={{ '--item-index': index }}
-                        onClick={() => handleModelSelect(model.name)}
-                      >
-                        <img src={model.logo} className="select-model-logo" alt={model.name} />
-                        {model.name}
-                      </div>
-                    ))}
-                    <div className="models-class-seperator"></div>
-                    <div className='dropdown-text'>Token efficient models</div>
-                    {filterModels(tokenEfficientModels).map((model, index) => (
-                      <div 
-                        key={`efficient-${index}`}
                         className={`dropdown-item ${selectedModels.includes(model.name) ? 'selected' : ''}`}
                         style={{ '--item-index': index }}
                         onClick={() => handleModelSelect(model.name)}
@@ -947,15 +1014,6 @@ function Chat() {
                   </div>
                 </div>
               )}
-            </div>
-
-            { /* Collaborate option */ }
-            <div className="collaborate-container">
-              <span className="collaborate-label">Collaborate?</span>
-              <label className="switch">
-                <input type="checkbox" onChange={handleCollaborateChange}/>
-                <span className="slider round"></span>
-              </label>
             </div>
 
             { /* "Send prompt" button */ }

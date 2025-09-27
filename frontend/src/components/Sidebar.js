@@ -512,16 +512,19 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
                 Search chat
               </p>
             </button>
-            <button 
-              className={`sidebar-actions ${isGuest ? 'disabled' : ''}`}
-              disabled={isGuest}
-            >
-              <img 
-                src="https://www.svgrepo.com/show/521658/feedback.svg" 
-                className="sidebar-actions-icons" 
-              />
-              <p className="sidebar-actions-text">Notes</p>
-            </button>
+            <div className="tooltip-container">
+              <button 
+                className={`sidebar-actions ${isGuest ? 'disabled' : ''}`}
+                disabled={isGuest}
+              >
+                <img 
+                  src="https://www.svgrepo.com/show/521658/feedback.svg" 
+                  className="sidebar-actions-icons" 
+                />
+                <p className="sidebar-actions-text">Notes</p>
+              </button>
+              <span className="tooltip-text">Coming Soon</span>
+            </div>
               {/* Add Library later */}
             {/*<button className="sidebar-actions">
             <img src="https://www.svgrepo.com/show/437146/photo-on-rectangle.svg" className="sidebar-actions-icons" />

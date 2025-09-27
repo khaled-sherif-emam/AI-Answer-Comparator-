@@ -67,3 +67,55 @@ export async function deductGuestTokens(tokensUsed, guest_id) {
         console.log('Guest tokens deducted successfully');
     }
 }
+
+export async function checkGuestTokens(guest_id) {
+    console.log(`Checking guest's available tokens...`);
+
+    const { data: guestData, error: fetchError } = await supabase
+        .from('guests')
+        .select('available_tokens')
+        .eq('guest_id', guest_id)
+        .single();
+
+    const available_tokens = guestData?.available_tokens;
+
+    if (fetchError) {
+        console.log(`Unable to fetch guest's available tokens`, fetchError.message);
+        return;
+    }
+
+    if (available_tokens <= 0) {
+        console.log(`Guest's available tokens are less than or equal to 0`);
+        return false;
+    }
+    else {
+        console.log(`Guest's available tokens checked successfully`);
+        return true;
+    }
+}
+
+export async function checkUserTokens(user_id) {
+    console.log(`Checking user's available tokens...`);
+
+    const { data: userData, error: fetchError } = await supabase
+        .from('users')
+        .select('available_tokens')
+        .eq('user_id', user_id)
+        .single();
+
+    const available_tokens = userData?.available_tokens;
+
+    if (fetchError) {
+        console.log(`Unable to fetch user's available tokens`, fetchError.message);
+        return;
+    }
+
+    if (available_tokens <= 0) {
+        console.log(`User's available tokens are less than or equal to 0`);
+        return false;
+    }
+    else {
+        console.log(`User's available tokens checked successfully`);
+        return true;
+    }
+}

@@ -150,6 +150,49 @@
   border-radius: 10px;
 }
 
+/* Tooltip styles */
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 100px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 12px;
+  pointer-events: none;
+  margin-bottom: 8px;
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-text::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
 
 /* Search input styles */
 .search-input-container {
@@ -547,7 +590,8 @@
 .token-progress-labels {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
   font-size: 0.8rem;
   font-weight: 500;
   color: black;

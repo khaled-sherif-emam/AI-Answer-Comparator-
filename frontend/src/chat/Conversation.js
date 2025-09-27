@@ -11,8 +11,11 @@ import 'highlight.js/styles/github.css';
 
 
 const MODEL_ICONS = {
-  'ChatGPT-4.1': 'https://pngimg.com/d/chatgpt_PNG1.png',
+  'ChatGPT 4o': 'https://pngimg.com/d/chatgpt_PNG1.png',
+  'ChatGPT-5 Mini': 'https://pngimg.com/d/chatgpt_PNG1.png',
+  'ChatGPT-5': 'https://pngimg.com/d/chatgpt_PNG1.png',
   'DeepSeek-V3': 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png',
+  'DeepSeek R1': 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png',
   'Llama 3.3 70B Instruct': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Meta_Platforms_Inc._logo_%28cropped%29.svg/2560px-Meta_Platforms_Inc._logo_%28cropped%29.svg.png',
   'Joint Response': 'https://cdn-icons-png.flaticon.com/512/7046/7046086.png',
 };
