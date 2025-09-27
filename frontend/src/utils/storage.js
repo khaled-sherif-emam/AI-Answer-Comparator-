@@ -51,6 +51,7 @@ export const hasUserId = () => {
 };
 
 const CHAT_ID_KEY = 'current_chat_id';
+const GUEST_ID_KEY = 'promptly_guest_id';
 
 /**
  * Stores the current chat ID in localStorage
@@ -96,4 +97,50 @@ export const removeChatId = () => {
  */
 export const hasChatId = () => {
   return getChatId() !== null;
+};
+
+/**
+ * Stores the guest ID in localStorage
+ * @param {string} guestId - The guest ID to store
+ */
+export const storeGuestId = (guestId) => {
+  try {
+    localStorage.setItem(GUEST_ID_KEY, guestId);
+    console.log('Guest ID stored in localStorage');
+  } catch (error) {
+    console.error('Error storing guest ID in localStorage:', error);
+  }
+};
+
+/**
+ * Retrieves the guest ID from localStorage
+ * @returns {string|null} The stored guest ID or null if not found
+ */
+export const getGuestId = () => {
+  try {
+    return localStorage.getItem(GUEST_ID_KEY);
+  } catch (error) {
+    console.error('Error getting guest ID from localStorage:', error);
+    return null;
+  }
+};
+
+/**
+ * Removes the guest ID from localStorage
+ */
+export const removeGuestId = () => {
+  try {
+    localStorage.removeItem(GUEST_ID_KEY);
+    console.log('Guest ID removed from localStorage');
+  } catch (error) {
+    console.error('Error removing guest ID from localStorage:', error);
+  }
+};
+
+/**
+ * Checks if a guest ID exists in localStorage
+ * @returns {boolean} True if guest ID exists, false otherwise
+ */
+export const hasGuestId = () => {
+  return getGuestId() !== null;
 };

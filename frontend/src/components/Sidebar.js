@@ -3,13 +3,31 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Sidebar.css';
 import { getUserId, storeChatId, getChatId } from '../utils/storage';
 import { formatTokens } from './sidebarOperations';
+import { hasGuestId, getGuestId } from '../utils/storage';
 
 
 const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [chats, setChats] = useState([]);
   const [internalSelectedChatId, setInternalSelectedChatId] = useState(null);
-  const [lastUpdated, setLastUpdated] = useState(Date.now())
+  const [lastUpdated, setLastUpdated] = useState(Date.now());
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isGuest, setIsGuest] = useState(false);
+  const [guestId, setGuestId] = useState(null);
+  
+  
+  // Check if user has guest ID when component mounts
+  useEffect(() => {
+    const checkGuestId = async () => {
+      const isGuest = hasGuestId();
+      setIsGuest(isGuest);
+      const guestId = getGuestId();
+      setGuestId(guestId);
+      console.log('Has guest:', isGuest);
+    }
+    checkGuestId();
+  }, []);
   
   // Update selected chat when chats are loaded
   useEffect(() => {
@@ -239,7 +257,15 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
           handleNewChat();
         } else {
           // Select another chat if available
-          const newSelectedChat = chats.find(chat => chat.id !== chatId)?.id || null;
+          const filteredChats = chats.filter(chat => {
+            if (!chat) return false;
+            const matchesTitle = chat.title && chat.title.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesContent = chat.messages && chat.messages.some(
+              msg => msg && msg.content && msg.content.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            return matchesTitle || matchesContent;
+          });
+          const newSelectedChat = filteredChats.find(chat => chat.id !== chatId)?.id || null;
           if (newSelectedChat) {
             const newChatId = String(newSelectedChat);
             setInternalSelectedChatId(newChatId);
@@ -301,20 +327,14 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
     fetchChats();
   }, []); // Empty dependency array means this runs once on mount
 
-
-
-
-
-
-
-
-
   // User info variables
   const [availableTokens, setAvailableTokens] = useState(null);
   const [allocatedTokens, setAllocatedTokens] = useState(null);
   const [userName, setUserName] = useState(null);
   const [userInitials, setUserInitials] = useState(null);
-  const [userSubscriptionPlan, setUserSubscriptionPlan] = useState(null)
+  const [userSubscriptionPlan, setUserSubscriptionPlan] = useState(null);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [editValue, setEditValue] = useState('');
 
   // Get user info
   useEffect(() => {
@@ -323,18 +343,20 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
       const userId = getUserId();
       
       if (userId) {
-        // Get the user's name
-        const userName = localStorage.getItem('userName');
-        console.log(`User's name:`, userName);
-        setUserName(userName);
+        // For logged-in users
+        const name = localStorage.getItem('userName') || 'User';
+        console.log(`User's name:`, name);
+        setUserName(name);
 
         // Get the user's initials
-        const initials = userName
-          .split(" ")          // split into words
-          .map(word => word[0]) // take first letter of each
-          .join("")            // join them
-          .toUpperCase();      // make uppercase
-        
+        const initials = name
+          .split(" ")
+          .map(word => word[0] || '')
+          .join("")
+          .toUpperCase()
+          .substring(0, 2) // Take max 2 characters
+          || 'U'; // Fallback to 'U' if empty
+          
         setUserInitials(initials);
 
         // Get the user's subscription plan that they're subscribed to
@@ -398,13 +420,52 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
         } catch (error) {
           console.error('Failed to get user tokens:', error);
         }
-       
+      }
+      else {  // If user is a guest
+        console.log('User is a guest');
+        console.log('Fetching user tokens for guest:', guestId);
 
-
-      } // Add an ELSE part
+        const guest_id = getGuestId();
+        console.log('Guest ID:', guestId)
+        
+        try {
+          const response = await fetch(`${API_BASE_URL}/api/guest/handleGetGuestTokens`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ guest_id: guest_id }),
+          });
+          
+          const data = await response.json();
+          console.log('Guest tokens response:', data);
+          
+          if (!response.ok) {
+            throw new Error(data.message || 'Failed to fetch guest tokens');
+          }
+          
+          if (!data.success) {
+            throw new Error(data.message || 'Failed to get guest tokens');
+          }
+          
+          console.log(`Guest's available tokens:`, data.available_tokens);
+          console.log(`Guest's allocated tokens:`, data.allocated_tokens);
+          console.log('Setting available tokens to:', data.available_tokens);
+          console.log('Setting allocated tokens to:', data.allocated_tokens);
+          setAvailableTokens(Number(data.available_tokens));
+          setAllocatedTokens(Number(data.allocated_tokens));
+          console.log('Current state after set:', { 
+            availableTokens: availableTokens, 
+            allocatedTokens: allocatedTokens 
+          });
+        } catch (error) {
+          console.error('Failed to get guest tokens:', error);
+        }
+      }
     }
     getUserInfo();
-  }, []);
+  }, [guestId]);
 
 
   return (
@@ -421,33 +482,126 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
       </button>
       <div className={`sidebar ${isOpen ? 'open' : ''}`}>
         
-        <div className="sidebar-content">
+        <div className={`sidebar-content ${!isGuest ? 'disabled' : ''}`}>
           <div className="sidebar-actions-container">
             {/* Add your sidebar content here */}
-            <button className="sidebar-actions" onClick={handleNewChat}>
-              <img src="https://www.svgrepo.com/show/456551/pencil-chat.svg" className="sidebar-actions-icons" />
+            <button 
+              className={`sidebar-actions ${isGuest ? 'disabled' : ''}`} 
+              onClick={!isGuest ? handleNewChat : undefined}
+              disabled={isGuest}
+            >
+              <img 
+                src="https://www.svgrepo.com/show/456551/pencil-chat.svg" 
+                className="sidebar-actions-icons" 
+              />
               <p className="sidebar-actions-text">New chat</p>
             </button>
-            <button className="sidebar-actions">
-            <img src="https://www.svgrepo.com/show/356535/search-button.svg" className="sidebar-actions-icons" />
-              <p className="sidebar-actions-text">Search chat</p></button>
-            <button className="sidebar-actions">
-              <img src="https://www.svgrepo.com/show/521658/feedback.svg" className="sidebar-actions-icons" />
-              <p className="sidebar-actions-text">Notes</p></button>
-            <button className="sidebar-actions">
+            <button 
+              className={`sidebar-actions ${isGuest ? 'disabled' : ''}`}
+              onClick={!isGuest ? () => {
+                setIsSearching(!isSearching);
+                if (!isSearching) setSearchQuery('');
+              } : undefined}
+              disabled={isGuest}
+            >
+              <img 
+                src={"https://www.svgrepo.com/show/356535/search-button.svg"} 
+                className="sidebar-actions-icons" 
+              />
+              <p className="sidebar-actions-text">
+                Search chat
+              </p>
+            </button>
+            <button 
+              className={`sidebar-actions ${isGuest ? 'disabled' : ''}`}
+              disabled={isGuest}
+            >
+              <img 
+                src="https://www.svgrepo.com/show/521658/feedback.svg" 
+                className="sidebar-actions-icons" 
+              />
+              <p className="sidebar-actions-text">Notes</p>
+            </button>
+              {/* Add Library later */}
+            {/*<button className="sidebar-actions">
             <img src="https://www.svgrepo.com/show/437146/photo-on-rectangle.svg" className="sidebar-actions-icons" />
-              <p className="sidebar-actions-text">Library</p></button>
+              <p className="sidebar-actions-text">Library</p></button>*/}
           </div>
 
-          { /* Display all user chats */}
-          <div className="chats-container">
-            <p className="chats-title">Chats</p>
-            {chats.length === 0 &&
-            <div className='no-chats-found-container'>
-              <p className="no-chats-found-label">No chats found</p>
+          {isSearching && (
+            <div className="search-input-container">
+              <div className="search-input-wrapper">
+                <input
+                  type="text"
+                  placeholder="Search chats..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="search-input"
+                  autoFocus
+                />
+                {searchQuery && (
+                  <button 
+                    type="button"
+                    className="clear-search-button"
+                    onClick={() => setSearchQuery('')}
+                    aria-label="Clear search"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                )}
+              </div>
+              <button 
+                className="close-search-button"
+                onClick={() => {
+                  setIsSearching(false);
+                  setSearchQuery('');
+                }}
+              >
+                <img src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/all-icons/x-919o2m0hea73deh80x64u2.png/x-b8u46hdovcz62tsfbgky7.png?_a=DATAg1AAZAA0" className="close-search-button-img"></img>
+              </button>
             </div>
-            }
-            {Array.isArray(chats) && chats.map(chat => (
+          )}
+          
+          <div className="chats-container">
+            <p className="chats-title">
+              {isSearching && searchQuery ? 'Search Results' : 'Chats'}
+              {isSearching && searchQuery && chats.filter(chat => 
+                chat.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                chat.messages?.some(msg => 
+                  msg?.content?.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+              ).length === 0 && (
+                <span className="no-results"> - No matches found</span>
+              )}
+            </p>
+            {chats.length === 0 && (
+              <div className='no-chats-found-container'>
+                {isGuest ? (
+                  <div className="guest-prompt">
+                    <p className="guest-prompt-text">Sign in to start your first chat and save notes!</p>
+                    <button 
+                      className="guest-signin-button"
+                      onClick={() => window.location.href = '/authentication/LoginPage'}
+                    >
+                      Login / Register
+                    </button>
+                  </div>
+                ) : (
+                  <p className="no-chats-found-label">No chats found</p>
+                )}
+              </div>
+            )}
+            {Array.isArray(chats) && chats
+              .filter(chat => 
+                !searchQuery || 
+                chat.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                chat.messages?.some(msg => 
+                  msg?.content?.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+              )
+              .map(chat => (
               <div key={chat.id} className="chat-button-wrapper">
                 {editingChatId === chat.id ? (
                   <form 
@@ -542,11 +696,23 @@ const Sidebar = ({ onChatSelect, selectedChatId: propSelectedChatId }) => {
           { /* Display user info */ }
           <div className="user-profile-container">
             <div className="user-profile-circle">
-              <p className="initials">{userInitials}</p>
+              {!isGuest && userInitials ? (
+                <p className="initials">{userInitials}</p>
+              ) : (
+                <p className="initials">G</p>
+              )}
             </div>
             <div className="user-profile-info">
-              <p className="user-profile-name">{userName}</p>
-              <p className="user-subscription-plan">{userSubscriptionPlan}</p>
+              {isGuest ? (
+                <p className="user-profile-name">Guest</p>
+              ) : (
+                <p className="user-profile-name">{userName}</p>
+              )}
+              {isGuest ? (
+                <p className="user-subscription-plan">No Subscription</p>
+              ) : (
+                <p className="user-subscription-plan">{userSubscriptionPlan}</p>
+              )}
             </div>
 
             <button className="user-actions-button">

@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { createClient } from '@supabase/supabase-js';
 import jwt from 'jsonwebtoken';
-import { Login, Signup, AddUserInfo, getSession } from '../services/authServices.js';
+import { Login, Signup, AddUserInfo, getSession, createGuest } from '../services/authServices.js';
 
 // Initialize Supabase client with error handling
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
@@ -243,6 +243,24 @@ export async function checkSession(req, res) {
         return res.status(500).json({
             success: false,
             message: 'Failed to check session',
+            error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+        });
+    }
+}
+
+export async function handleCreateGuest(req, res) {
+    try {
+        const guest = await createGuest();
+        return res.status(200).json({
+            success: true,
+            message: 'Guest checked in successfully',
+            guest: guest
+        });
+    } catch (error) {
+        console.error('Error in handleCreateGuest:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to create guest',
             error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
         });
     }

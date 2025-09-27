@@ -1,7 +1,8 @@
 import { API_ENDPOINTS, API_CONFIG } from '../config/api';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getChatId } from '../utils/storage';
+import { getChatId, getGuestId } from '../utils/storage';
+import { getUserId } from '../utils/storage';
 
 import './Conversation.css';
 import ReactMarkdown from 'react-markdown';
@@ -98,7 +99,98 @@ const Conversation = ({ selectedChatId, lastUpdated, isLoading: isParentLoading,
       }
     };
 
-    fetchConversation();
+    const fetchGuestConversation = async () => {
+      setIsLoading(true);
+      setError(null);
+      
+      try {
+        const guest_id = getGuestId();
+        console.log('Guest ID:', guest_id);
+        
+        if (!guest_id) {
+          console.log('No guest ID found, starting fresh conversation');
+          setMessages([]);
+          setMessagesFound(false);
+          setIsLoading(false);
+          return;
+        }
+        
+        const response = await fetch(API_ENDPOINTS.GUEST_CHAT.GET_GUEST_MESSAGES, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...API_CONFIG.DEFAULT_HEADERS
+          },
+          credentials: 'include',
+          body: JSON.stringify({ guest_id }),
+        });
+
+        // Handle non-200 responses
+        if (!response.ok) {
+          // If 404, it means no messages found (which is fine for a new guest)
+          if (response.status === 404) {
+            console.log('No messages found for guest, starting fresh conversation');
+            setMessages([]);
+            setMessagesFound(false);
+            setIsLoading(false);
+            return;
+          }
+          
+          // For other errors, throw an error
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || 'Failed to fetch messages');
+        }
+
+        const data = await response.json();
+        
+        // If no messages found, set empty array and return
+        if (!data.success) {
+          if (data.message && data.message.includes('No messages found')) {
+            console.log('No messages found for guest, starting fresh conversation');
+            setMessages([]);
+            setMessagesFound(false);
+            setIsLoading(false);
+            return;
+          }
+          throw new Error(data.message || 'Failed to load conversation');
+        }
+
+        // The backend returns messages in data.messages
+        const messages = Array.isArray(data.messages) ? data.messages : [];
+        console.log('Guest messages from API:', messages);
+        
+        // Transform messages to match the expected format
+        const transformedMessages = messages.map(msg => ({
+          ...msg,
+          // Ensure required fields exist
+          id: msg.id || `temp-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          role: msg.role || (msg.model_used ? 'assistant' : 'user'),
+          content: msg.content || '',
+          created_at: msg.created_at || new Date().toISOString(),
+          model_used: msg.model_used || null,
+          prompt_id: msg.prompt_id || null
+        }));
+        
+        console.log('Transformed messages:', transformedMessages);
+        setMessages(transformedMessages);
+        setMessagesFound(transformedMessages.length > 0);
+        
+        // Scroll to bottom after messages are updated
+        setTimeout(scrollToBottom, 100);
+      } catch (err) {
+        console.error('Error fetching messages:', err);
+        setError('Failed to load messages');
+        setMessagesFound(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    if (getUserId()) {
+      fetchConversation();
+    } else {
+      fetchGuestConversation();
+    }
   }, [selectedChatId, lastUpdated]);
 
 
@@ -107,35 +199,74 @@ const Conversation = ({ selectedChatId, lastUpdated, isLoading: isParentLoading,
     const promptMap = new Map();
     
     const safeMessages = Array.isArray(messages) ? messages : [];
+    console.log('Grouping messages:', safeMessages);
     
     if (safeMessages.length > 0) {
       // First, find all prompts and initialize their response arrays
       safeMessages.forEach(message => {
-        if (!message.model_used) {
+        // A message is a prompt if it's from the user or doesn't have a model_used
+        const isPrompt = message.role === 'user' || !message.model_used;
+        if (isPrompt) {
           promptMap.set(message.id, {
             ...message,
-            responses: []
+            responses: [],
+            // Ensure selected_models is always an array
+            selected_models: message.selected_models || []
           });
         }
       });
       
       // Then, assign responses to their prompts
       safeMessages.forEach(message => {
-        if (message.model_used && message.prompt_id) {
-          const prompt = promptMap.get(message.prompt_id);
+        // A message is a response if it's from the assistant or has a model_used
+        const isResponse = message.role === 'assistant' || message.model_used;
+        if (isResponse) {
+          let prompt = null;
+          
+          // First try to find by prompt_id if it exists
+          if (message.prompt_id) {
+            prompt = promptMap.get(message.prompt_id);
+          }
+          
+          // If no prompt found by ID, find the most recent prompt before this response
+          if (!prompt) {
+            const prompts = Array.from(promptMap.values())
+              .filter(p => new Date(p.created_at) <= new Date(message.created_at));
+              
+            if (prompts.length > 0) {
+              // Sort by creation time (newest first) and take the most recent one
+              prompts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+              prompt = prompts[0];
+            }
+          }
+          
           if (prompt) {
-            prompt.responses.push(message);
+            // Check if this response is already in the prompt's responses
+            const existingResponse = prompt.responses.find(r => r.id === message.id);
+            
+            if (!existingResponse) {
+              prompt.responses.push({
+                ...message,
+                model_used: message.model_used || 'Unknown Model',
+                created_at: message.created_at || new Date().toISOString()
+              });
+              console.log(`Added response to prompt ${prompt.id}:`, message.content);
+            }
+          } else {
+            console.warn('Could not find prompt for response:', message);
           }
         }
       });
       
-      // Convert the map values to an array for rendering
-      const newGroupedMessages = Array.from(promptMap.values());
+      // Convert the map values to an array and sort by creation time
+      const newGroupedMessages = Array.from(promptMap.values())
+        .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+        
       console.log('Grouped messages:', newGroupedMessages);
       setGroupedMessages(newGroupedMessages);
     } else {
       setGroupedMessages([]);
-      console.log("No messages");
+      console.log("No messages to display");
     }
   }, [messages]);
   
@@ -184,17 +315,19 @@ const Conversation = ({ selectedChatId, lastUpdated, isLoading: isParentLoading,
             {showLoading && !prompt.responses?.length && (
               <div className="loading-message-container">
                 <div className="model-logos-loading">
-                  {selectedModels?.map((modelName) => (
-                    MODEL_ICONS[modelName] && (
+                  {/* Use prompt.selected_models if available, otherwise fallback to selectedModels prop */}
+                  {(prompt.selected_models || selectedModels)?.map((modelName) => {
+                    const icon = MODEL_ICONS[modelName];
+                    return icon ? (
                       <div key={modelName} className="model-logo-loading">
                         <img 
-                          src={MODEL_ICONS[modelName]} 
+                          src={icon} 
                           alt={`${modelName} logo`} 
                           title={modelName}
                         />
                       </div>
-                    )
-                  ))}
+                    ) : null;
+                  })}
                   <div className="bouncing-dots">
                     <span className="loading-dot"></span>
                     <span className="loading-dot"></span>

@@ -1,19 +1,13 @@
 import { API_ENDPOINTS, API_CONFIG } from '../config/api';
 import { getInitials } from '../chat/chatOperations';
-
 import './Chat.css';
 import React, { useState, useEffect, useRef } from "react";
-import { saveUserId, getUserId, removeUserId } from '../utils/storage';
+import { saveUserId, getUserId, removeUserId, removeChatId } from '../utils/storage';
+import WelcomePopup from '../components/WelcomePopup';
+import { storeGuestId, getGuestId, removeGuestId, hasGuestId } from '../utils/storage';
 import Conversation from './Conversation';
 import { useNavigate } from "react-router-dom";
-import { supabase } from '../authentication/supabaseClient';
-import { enhancePrompt } from '../server';
-import { storePrompt } from '../server';
-import { contactAI } from '../server';
-import { generateJointAnswer } from '../server';
-import { storeResponses } from '../server';
-import { deductTokens } from '../server';
-import { storeTokensUsedPerResponse } from '../server';
+import { deductTokens, deductGuestTokens } from '../server';
 import { getChatId, storeChatId } from '../utils/storage';
 import Sidebar from '../components/Sidebar';
 import LogoutConfirmation from '../components/LogoutConfirmation';
@@ -22,6 +16,9 @@ import LogoutConfirmation from '../components/LogoutConfirmation';
 
 function Chat() {
   const [userId, setUserId] = useState('')
+  const [guestId, setGuestId] = useState(null);
+  const [isGuest, setIsGuest] = useState(false);
+  const [showWelcomePopup, setShowWelcomePopup] = useState(false);
   const [user_name, setUserName] = useState('')
   const [initials, setInitials] = useState('')
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -45,21 +42,11 @@ function Chat() {
       
       try {
         // Check if the user is logged in
-        const response = await fetch(API_ENDPOINTS.AUTH.CHECK_SESSION, {
-          method: 'POST',
-          credentials: 'include', // Important for cookies
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        });
+        const currentUserId = getUserId();
         
-        const data = await response.json();
-        let currentUserId = '';
-        
-        if (data.success) {
-          console.log("User is logged in:", data);
-          currentUserId = data.user_id;
+        if (currentUserId) {
+          removeGuestId(); // Remove guest id if there is one
+          console.log("User is logged in:", currentUserId);
           setUserId(currentUserId);  // Set the user ID in state
           saveUserId(currentUserId);  // Save the user ID to localStorage
 
@@ -96,6 +83,39 @@ function Chat() {
           }
         } else {
           console.log("User is not logged in");
+
+          // Check if the user is a guest
+          if (hasGuestId()) {
+            console.log("User is a guest");
+            setGuestId(getGuestId());
+          } else {
+            // Create a guest Id
+            const response = await fetch(API_ENDPOINTS.AUTH.CREATE_GUEST, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
+            });
+            
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const guest = await response.json();
+            
+            if (guest && guest.success) {
+              console.log("Guest has been successfully created:", guest);
+              const guestId = guest.guest?.guestId || guest.guestId;
+              console.log('Extracted guestId:', guestId);
+              storeGuestId(guestId);
+              setGuestId(guestId);
+              setShowWelcomePopup(true);
+            } else {
+              console.log("Couldn't create guest:", guest?.message || 'Unknown error');
+            }
+          }
+
         }
 
       } catch (error) {
@@ -131,7 +151,11 @@ function Chat() {
   }
   const handleLogout = async () => {
     try {
-      // IMPORTANT: Add logout logic here
+      // Clear user ID and chat ID from local storage
+      removeUserId();
+      removeChatId();
+      
+      // Navigate to login page
       navigate('/authentication/LoginPage');
       setShowLogoutConfirm(false);
     } catch (error) {
@@ -198,32 +222,74 @@ function Chat() {
   const [isEnhancing, setIsEnhancing] = useState(false);
   const textareaRef = useRef(null);
   
+  // Reset textarea height when prompt is cleared
+  useEffect(() => {
+    if (!prompt && textareaRef.current) {
+      console.log('Resetting textarea height');
+      const textarea = textareaRef.current;
+      textarea.style.height = '24px';
+      textarea.style.minHeight = '24px';
+      
+      // Log computed styles for debugging
+      const styles = window.getComputedStyle(textarea);
+      console.log('Current textarea styles:', {
+        height: styles.height,
+        minHeight: styles.minHeight,
+        maxHeight: styles.maxHeight,
+        overflowY: styles.overflowY
+      });
+    }
+  }, [prompt]);
+  
+  
   // Auto-resize textarea and container based on content
   const autoResize = (element) => {
-    // Reset heights to get accurate scrollHeight
+    if (!element) return;
+    
+    // If textarea is empty, reset to initial height
+    if (!element.value) {
+      element.style.height = '38px';
+      element.style.minHeight = '38px';
+      
+      const container = element.closest('.input-container');
+      if (container) {
+        container.style.height = '56px';
+        container.style.minHeight = '56px';
+      }
+      
+      const messageContainer = container?.closest('.message-container');
+      if (messageContainer) {
+        messageContainer.style.height = '112px';
+        messageContainer.style.minHeight = '112px';
+        messageContainer.style.transform = 'translate(-50%, 0)';
+      }
+      return;
+    }
+    
+    // For non-empty textarea, calculate new height
     element.style.height = 'auto';
     const container = element.closest('.input-container');
     const messageContainer = container?.closest('.message-container');
     
-    // Calculate new heights
     const newHeight = Math.min(element.scrollHeight, 300);
     const containerPadding = 12; 
     const totalHeight = newHeight + containerPadding;
     
-    // Apply new heights
+    // Set the new height for the textarea
     element.style.height = `${newHeight}px`;
+    
+    // Adjust container height if it exists
     if (container) {
       container.style.minHeight = `${totalHeight}px`;
-      
-      // Adjust message container height and position
-      if (messageContainer) {
-        // Set the message container's min-height to match the input container
-        messageContainer.style.minHeight = `${totalHeight + 60}px`; // Add some margin
-        const maxContainerHeight = 400; // Match the max-height from CSS
-        const translateY = Math.max(0, totalHeight - maxContainerHeight);
-        messageContainer.style.transform = `translate(-50%, -${translateY}px)`;
-      }
     }
+    
+    // Adjust message container height and position
+    if (messageContainer) {
+      messageContainer.style.minHeight = `${totalHeight + 60}px`;
+      const maxContainerHeight = 400;
+      const translateY = Math.max(0, totalHeight - maxContainerHeight);
+      messageContainer.style.transform = `translate(-50%, -${translateY}px)`;
+    }  
   };
   
   // Handle textarea changes
@@ -345,8 +411,29 @@ function Chat() {
     
     setIsEnhancing(true);
     try {
-      const enhancedPrompt = await enhancePrompt(prompt);
-      setPrompt(enhancedPrompt);
+      const response = await fetch(API_ENDPOINTS.CHAT.ENHANCE_PROMPT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+          user_id: getChatId()
+        }),
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data && data.success) {
+        setPrompt(data.enhanced_prompt);
+      } else {
+        throw new Error(data?.error || 'Failed to enhance prompt');
+      }
     } catch (error) {
       console.error('Error enhancing prompt:', error);
     } finally {
@@ -357,6 +444,12 @@ function Chat() {
 
   // Handle the chat operation when the user clicks on the send button
   const handleChatOperation = async () => {
+
+    if (!userId) {
+      handleGuestChatOperation();
+      return;
+    }
+
     if (!prompt.trim()) return; // Don't send empty messages
     
     setIsGeneratingResponse(prevState => true);
@@ -366,44 +459,140 @@ function Chat() {
       
       if (!chatId) {
         console.log('No chat ID found, creating a new chat...');
-        //const newChat = await createChat(userId);
-        //chatId = newChat.id;
-        //console.log("New chat created with ID:", chatId);
-        
-        // Update the selected chat ID in state and storage
-        //setSelectedChatId(chatId);
-        //storeChatId(chatId);
-        
-        // Wait for the state to update
-        //await new Promise(resolve => setTimeout(resolve, 100));
+        // Continue this later... If necessary
       }
       
       console.log('Using chat ID:', chatId);
-      const prompt_id = await storePrompt(prompt, chatId);
+      const prompt_info_response = await fetch(API_ENDPOINTS.CHAT.STORE_PROMPT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+          chat_id: chatId,
+          selectedModels,
+        }),
+      });
+      
+      const prompt_info = await prompt_info_response.json();
+      const prompt_id = prompt_info.prompt_id;
+      console.log('Prompt ID:', prompt_id);
+
       
       // Store the prompt in a variable before clearing the input
       const prompt_to_answer = prompt;
-      setPrompt(''); // Clear the input field
+      
+      // Store the textarea and container references
+      const textarea = textareaRef.current;
+      const container = textarea?.closest('.input-container');
+      const messageContainer = container?.closest('.message-container');
+      
+      // Clear the input field
+      setPrompt('');
+      
+      // Reset textarea to initial state
+      if (textarea) {
+        // Reset textarea styles
+        textarea.style.height = '38px';
+        textarea.style.minHeight = '38px';
+        
+        // Reset container heights if they exist
+        if (container) {
+          container.style.height = '56px';
+          container.style.minHeight = '56px';
+          void container.offsetHeight; // Force reflow
+        }
+        
+        if (messageContainer) {
+          messageContainer.style.height = '112px';
+          messageContainer.style.minHeight = '112px';
+          messageContainer.style.transform = 'translate(-50%, 0)';
+          void messageContainer.offsetHeight; // Force reflow
+        }
+        
+        console.log('Textarea reset to height:', textarea.offsetHeight);
+      }
       
       // Trigger a refresh to show the user's message
       setLastUpdated(Date.now());
       
-      // Wait for the UI to update before sending to AI
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Small delay to ensure UI updates
+      await new Promise(resolve => setTimeout(resolve, 50));
       
-      const responsesAndTokens = await contactAI(selectedModels, prompt_to_answer, chatId);
-      const responses = responsesAndTokens[0];
-      const tokensUsed = responsesAndTokens[1];
-
-      console.log('Responses & Tokens used', responsesAndTokens)
+      // Send prompt to the selected AI models through the ContactAI() function
+      console.log('Sending request to:', API_ENDPOINTS.CHAT.CONTACT_AI);
+      console.log('Selected models:', selectedModels);
+      console.log('Prompt:', prompt);
+      console.log('Chat ID:', chatId);
       
-      await storeResponses(chatId, prompt_id, selectedModels, responses, tokensUsed);
+      let responses = [];
+      let tokensUsed = [];
+      let AIResponses;
+      
+      try {
+        AIResponses = await fetch(API_ENDPOINTS.CHAT.CONTACT_AI, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            selectedModels,
+            prompt,
+            chat_id: chatId,
+          }),
+        });
 
-      // If the user wants all the chosen models to colaborate
-      if (collaborate) {   
-        const jointAnswer = await generateJointAnswer(prompt_id, responses, chatId);
-        console.log("Joint answer:", jointAnswer)
+        if (!AIResponses.ok) {
+          const errorText = await AIResponses.text();
+          throw new Error(`HTTP error! status: ${AIResponses.status}, ${errorText}`);
+        }
+
+        const responseData = await AIResponses.json();
+        
+        if (!responseData || !responseData.success) {
+          console.error('Error response from server:', responseData);
+          throw new Error(responseData?.message || 'Failed to get AI responses');
+        }
+
+        // Update responses and tokens from the response
+        responses = responseData.response?.responses || [];
+        tokensUsed = responseData.response?.tokensUsed || [];
+
+        console.log('AI Responses:', responses);
+        console.log('Tokens Used:', tokensUsed);
+        
+        if (responses.length === 0) {
+          throw new Error('No responses were generated by any AI models');
+        }
+      } catch (error) {
+        console.error('Error in AI response generation:', error);
+        throw error; // Re-throw to be caught by the outer try-catch
       }
+      
+      // Store the AI responses in the database
+      const storeResponsesResponse = await fetch(API_ENDPOINTS.CHAT.STORE_RESPONSES, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          prompt_id: prompt_id,
+          selectedModels: selectedModels,
+          responses: responses,
+          tokens_used: tokensUsed,
+        }),
+      })
+
+      const storeResponsesData = await storeResponsesResponse.json();
+      console.log('Store responses data:', storeResponsesData);
+
+      if (!storeResponsesData.success) {
+        throw new Error(storeResponsesData.message || 'Failed to store responses');
+      }
+
+      // TODO: implement joint answer
 
       // Deduct the tokens used from the user's balance
       console.log("Tokens to deduct:", tokensUsed[0])
@@ -417,6 +606,163 @@ function Chat() {
     } finally {
       setIsGeneratingResponse(false);
     }  
+  }
+
+
+  // If guest, handle guest chat operation in this function
+  const handleGuestChatOperation = async () => {
+    if (!prompt.trim()) return; // Don't send empty messages
+    
+    setIsGeneratingResponse(prevState => true);
+
+    console.log('Storing prompt for guest');
+
+    try {
+      // Store the guests prompt in the guest_prompts table
+      const storeGuestPromptResponse = await fetch(API_ENDPOINTS.GUEST_CHAT.STORE_GUEST_PROMPT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          guest_id: guestId,
+          prompt: prompt,
+          selected_models: selectedModels,
+        }),
+      });
+      
+      const storeGuestPromptData = await storeGuestPromptResponse.json();
+      console.log('Store guest prompt data:', storeGuestPromptData);
+      
+      if (!storeGuestPromptData.success) {
+        throw new Error(storeGuestPromptData.message || 'Failed to store guest prompt');
+      }
+
+      // Get the prompt id of the prompt from the response
+      const prompt_id = storeGuestPromptData.data.prompt_id;
+      console.log("Prompt ID:", prompt_id)
+      console.log("Prompt to answer:", prompt)
+
+      // Store the prompt in a variable before clearing the input
+      const prompt_to_answer = prompt;
+      
+      // Store the textarea and container references
+      const textarea = textareaRef.current;
+      const container = textarea?.closest('.input-container');
+      const messageContainer = container?.closest('.message-container');
+      
+      // Clear the input field
+      setPrompt('');
+      
+      // Reset textarea to initial state
+      if (textarea) {
+        // Reset textarea styles
+        textarea.style.height = '38px';
+        textarea.style.minHeight = '38px';
+        
+        // Reset container heights if they exist
+        if (container) {
+          container.style.height = '56px';
+          container.style.minHeight = '56px';
+          void container.offsetHeight; // Force reflow
+        }
+        
+        if (messageContainer) {
+          messageContainer.style.height = '112px';
+          messageContainer.style.minHeight = '112px';
+          messageContainer.style.transform = 'translate(-50%, 0)';
+          void messageContainer.offsetHeight; // Force reflow
+        }
+        
+        console.log('Textarea reset to height:', textarea.offsetHeight);
+      }
+      
+      // Trigger a refresh to show the user's message
+      setLastUpdated(Date.now());
+      
+      // Small delay to ensure UI updates
+      await new Promise(resolve => setTimeout(resolve, 50));
+      
+      // Contact AI to get responses
+      console.log('Sending request to CONTACT_AI endpoint:', {
+        url: API_ENDPOINTS.GUEST_CHAT.CONTACT_AI,
+        guest_id: guestId,
+        prompt_to_answer: prompt_to_answer, // Use the saved prompt variable
+        selected_models: selectedModels
+      });
+      
+      const contactAIResponse = await fetch(API_ENDPOINTS.GUEST_CHAT.CONTACT_AI, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          guest_id: guestId,
+          prompt_to_answer: prompt_to_answer, // Use the saved prompt variable
+          selected_models: selectedModels,
+        }),
+      });
+      
+      const contactAIData = await contactAIResponse.json();
+      console.log('Contact AI response status:', contactAIResponse.status);
+      console.log('Contact AI response data:', contactAIData);
+      
+      if (!contactAIData.success) {
+        console.error('Error in CONTACT_AI response:', contactAIData);
+        throw new Error(contactAIData.message || 'Failed to contact AI');
+      }
+      console.log("Contact AI response:", contactAIData);
+      const responses = contactAIData.data.response.responses;
+      const AIresponses = responses.map(item => item.response);
+      const tokens_used = contactAIData.data.response.tokensUsed;
+      console.log("Contact AI response responses:", AIresponses);
+      console.log("Contact AI response tokens used:", tokens_used);
+
+
+      // Store each AI response in the database
+      if (AIresponses && AIresponses.length > 0) {
+        console.log("Starting to store responses...");
+        try {
+          // Create models_used array that matches each response with its corresponding model
+          const models_used = responses.map((item, index) => {
+            // Get the model name for this response
+            return item.model || (selectedModels[index] || selectedModels[0]);
+          });
+          
+          console.log('Models used for responses:', models_used);
+          
+          const storeResponsesResponse = await fetch(API_ENDPOINTS.GUEST_CHAT.STORE_GUEST_RESPONSE, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...API_CONFIG.headers
+            },
+            body: JSON.stringify({
+              guest_id: guestId,
+              models_used: models_used,
+              responses: AIresponses,
+              tokens_used: tokens_used.map(t => t.tokens || t) // Handle both formats
+            }),
+          })
+          
+          console.log('All responses stored successfully');
+          
+          // Refresh the conversation to show the new messages
+          setLastUpdated(Date.now());
+
+          // Deduct the tokens used
+          deductGuestTokens(tokens_used, guestId);
+          
+        } catch (error) {
+          console.error('Error storing guest responses:', error);
+        }
+      }
+      
+    } catch (error) {
+      console.error('Error in handleGuestChatOperation:', error);
+    } finally {
+      setIsGeneratingResponse(false);
+    }
   }
 
   const handleKeyDown = (e) => {
@@ -440,30 +786,32 @@ function Chat() {
       }} />
       
       <div className="header-actions">
-        <button className="more-actions-button" onClick={toggleMoreMenu}>
-          <img 
-            src="https://www.svgrepo.com/show/335225/ellipsis.svg" 
-            className="edit-chat-button-svg" 
-            alt="Menu"
-          />
-          {showMoreMenu && (
-            <div className="more-actions-menu" ref={moreMenuRef}>
-              <button className="more-actions-menu-item">
-                <img className='report-icon'src="https://static.thenounproject.com/png/1045119-200.png"/>
-                <p className="report-text">Report</p>
-              </button>
-            </div>
-          )}
-        </button>
+        {userId && (
+          <button className="more-actions-button" onClick={toggleMoreMenu}>
+            <img 
+              src="https://www.svgrepo.com/show/335225/ellipsis.svg" 
+              className="edit-chat-button-svg" 
+              alt="More actions"
+            />
+            {showMoreMenu && (
+              <div className="more-actions-menu" ref={moreMenuRef}>
+                <button className="more-actions-menu-item">
+                  <img className='report-icon'src="https://static.thenounproject.com/png/1045119-200.png"/>
+                  <p className="report-text">Report</p>
+                </button>
+              </div>
+            )}
+          </button>
+        )}
 
         { /* Check if the user is logged in... */}
-        {!userId ? (
+        { hasGuestId() ? (
           <>
-          <button className="login-button" onClick={() => navigate("/authentication/LoginPage")}>
+          <button className="login-direct-button" onClick={() => navigate("/authentication/LoginPage")}>
             Log in
           </button>
-          <button className="signup-button">Sign up for free!</button>
-          </>
+          <button className="signup-direct-button" onClick={() => navigate("/authentication/SignupPage")}>Sign up for free!</button>
+        </>
         ) : (
           <div style={{ position: 'relative' }}>
             <button className="user-button" onClick={toggleUserMenu}>
@@ -627,8 +975,9 @@ function Chat() {
         </div>
       </div>
 
-      { /* Warning message */ }
-      <p className="warning-message">Promptly can make mistakes. Check important info.</p>
+      {showWelcomePopup && (
+        <WelcomePopup onClose={() => setShowWelcomePopup(false)} />
+      )}
       
       {/* Logout Confirmation Popup */}
       {showLogoutConfirm && (

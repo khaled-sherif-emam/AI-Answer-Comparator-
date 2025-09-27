@@ -1,4 +1,5 @@
 import { supabase } from "../config/db.js";
+import { randomUUID } from 'crypto';
 
 
 export async function Login(email, password) {
@@ -188,6 +189,43 @@ export async function AddUserInfo(user_id, full_name, purpose) {
         console.error('Error in AddUserInfo:', {
             error: error.message,
             userId: user_id,
+            stack: error.stack
+        });
+        throw error;
+    }
+}
+
+/**
+ * Generates a unique guest ID and stores it in the database
+ * @returns {Promise<Object>} The created guest record
+ */
+export async function createGuest() {
+    try {
+        // Generate a unique guest ID (UUID v4)
+        const guestId = randomUUID();
+        const now = new Date().toISOString();
+        
+        // Insert the new guest into the database
+        const { data, error } = await supabase
+            .from('guests')
+            .insert([{
+                guest_id: guestId,
+                available_tokens: 5000,
+                allocated_tokens: 5000,
+                created_at: now,
+            }])
+            .select()
+            .single();
+
+        if (error) throw error;
+        
+        return {
+            success: true,
+            guestId: data.guest_id,
+        };
+    } catch (error) {
+        console.error('Error in createGuest:', {
+            error: error.message,
             stack: error.stack
         });
         throw error;

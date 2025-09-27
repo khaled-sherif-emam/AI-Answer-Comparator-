@@ -15,18 +15,48 @@
   width: 80%;
 }
 
+@media (max-width: 768px) {
+  .login-button, .signup-button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    min-width: 70px;
+  }
+  
+  .signup-button {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-actions {
+    gap: 8px;
+  }
+  
+  .login-button, .signup-button {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+    min-width: 60px;
+  }
+  
+  .signup-button {
+    min-width: 90px;
+  }
+}
+
 .header-actions {
   position: fixed;
   top: 1.5%;
-  right: 1%;
+  right: 0.3%;
   display: flex;
   width: auto;
-  height: 4%;
+  height: 40px;
   flex-direction: row;
-  gap: 10%;
+  gap: 12px;
   justify-content: flex-end;
+  align-items: center;
   background-color: white;
   z-index: 10;
+  padding: 0 10px;
 }
 
 .menu-button {
@@ -38,23 +68,26 @@
 }
 
 .more-actions-button {
-  margin-top:10%;
   display: flex;
-  width: 28px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   align-items: center;
   justify-content: center;
   background-color: white;
   border: none;
-  border-radius: 30%;
+  border-radius: 50%;
   cursor: pointer;
-} .more-actions-button:hover {
+  padding: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.more-actions-button:hover {
   background-color: #F5F5F5;
 }
 .more-actions-menu {
   position: absolute;
-  top: 60%;
-  right: 40px;
+  top: 70%;
+  right: 55px;
   margin-top: 0;
   width: 140px;
   background-color: white;
@@ -89,28 +122,39 @@
 }
 
 
-.login-button {
-  width: 7vw;
+.login-direct-button {
+  min-width: 80px;
+  width: auto;
+  padding: 8px 16px;
   height: 100%;
   border-radius: 20px;
   border: none;
   background-color: black;
+  color: white;
   cursor: pointer;
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8rem;
+  white-space: nowrap;
+  transition: all 0.2s ease;
   font-weight: 600;
   color: white;
 }
 
-.signup-button {
-  width: 10vw;
+.signup-direct-button {
+  min-width: 120px;
+  width: auto;
+  padding: 8px 16px;
+  height: 100%;
   border-radius: 20px;
   background-color: white;
   border: 1px solid #E3E3E3;
+  color: black;
   cursor: pointer;
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8rem;
-  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  font-weight: 500;
   color: black;
 }
 
@@ -448,7 +492,8 @@ input:checked + .slider:before {
 
 .text-input {
   flex: 1;
-  min-height: 30px;
+  height: 38px;
+  min-height: 38px;
   max-height: 300px;
   border: none;
   resize: none;
@@ -633,7 +678,7 @@ input:checked + .slider:before {
 }
 
 .second-container {
-  margin-top: 0.15rem;
+  margin-top: -0.1rem;  /* Move container upward */
   display: flex;
   height: 40%;
   width: 99%;
@@ -843,18 +888,34 @@ input:checked + .slider:before {
 }
 
 .send-button {
-  margin-left: 482px;
-  align-self: center;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   border: none;
   background-color: black;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
 }
+
+.send-button:hover {
+  background-color: #333;
+}
+
+.send-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
 .send-button-svg {
-  margin-top: 0.4vw;
-  margin-left: 0.2vw;
+  width: 20px;
+  height: 20px;
+  fill: white;
 }
 
 

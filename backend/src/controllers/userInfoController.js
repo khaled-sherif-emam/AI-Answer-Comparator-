@@ -1,6 +1,7 @@
 import { getUserName, 
          getSubscriptionPlan,
-         getUserTokens } from '../services/userInfoServices.js';
+         getUserTokens,
+         getGuestTokens } from '../services/userInfoServices.js';
 
 export async function handleUserName(req, res) {
     try {
@@ -97,3 +98,34 @@ export async function handleGetUserTokens(req, res) {
         }); 
     }
 }
+
+export async function handleGetGuestTokens(req, res) {
+    try {
+        const { user_id } = req.body;
+        
+        const result = await getGuestTokens(user_id);
+
+        if (!result.success) {
+            return res.status(404).json({
+                success: false,
+                message: result.message || 'Failed to fetch guest tokens',
+                error: result.error
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            available_tokens: result.available_tokens,
+            allocated_tokens: result.allocated_tokens
+        });
+        
+    } catch(error) {
+        console.error('Error in handleGetGuestTokens controller:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        }); 
+    }
+}
+

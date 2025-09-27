@@ -5,6 +5,7 @@ import authRoutes from "./src/routes/authRoutes.js";
 import userInfoRoutes from "./src/routes/userInfoRoutes.js";
 import sidebarRoutes from "./src/routes/sidebarRoutes.js";
 import { router as chatRoutes } from "./src/routes/ChatRoutes.js";
+import guestRoutes from "./src/routes/guestRoutes.js";
 
 // Initialize app
 const app = express();
@@ -24,6 +25,8 @@ app.use(cors({
     const allowedOrigins = [
       'http://localhost:3000',
       'http://localhost:3001',
+      'http://localhost:3002',
+      'http://localhost:3003',
       // Add production domains here
     ];
     
@@ -57,7 +60,11 @@ app.use('/api/user', userInfoRoutes);
 // Sidebar routes
 app.use('/api/sidebar', sidebarRoutes);
 
-app.use("/api/chat", chatRoutes);
+// Chat routes
+app.use('/api/chat', chatRoutes);
+
+// Guest routes
+app.use('/api/guest', guestRoutes);
 
 // Test database connection
 app.get('/api/test-db', async (req, res) => {

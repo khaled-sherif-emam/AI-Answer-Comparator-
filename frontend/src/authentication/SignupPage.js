@@ -11,6 +11,10 @@ export default function SignupPage() {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    
+    const handleBackToChat = () => {
+        navigate('/'); // Navigate back to the chat page
+    };
 
     // Handle the signup process
     const handleSignup = async (e) => {
@@ -59,6 +63,13 @@ export default function SignupPage() {
 
     return (
         <div className="login-container">
+            <button 
+                onClick={handleBackToChat}
+                className="back-to-chat-button"
+                aria-label="Back to Chat"
+            >
+                ← Back to Chat
+            </button>
             <div className="login-card">
                 <h1 className="login-title">Create an Account</h1>
                 <p className="login-subtitle">

@@ -12,6 +12,8 @@
   z-index: 1000;
   opacity: 0;
   animation: fadeIn 0.3s ease-out forwards;
+  padding: 20px; /* Add padding to prevent touching screen edges on mobile */
+  box-sizing: border-box;
 }
 
 @keyframes fadeIn {

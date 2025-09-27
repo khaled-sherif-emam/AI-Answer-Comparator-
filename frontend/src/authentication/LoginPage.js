@@ -8,6 +8,10 @@ export default function LoginPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    
+    const handleBackToChat = () => {
+        navigate('/'); // Navigate back to the chat page
+    };
 
     // Handle the Login process
     const handleLogin = async(e) => {
@@ -48,26 +52,33 @@ export default function LoginPage() {
 
     return (
         <div className="login-container">
-            <div className="login-card">
-                <h1 className="login-title">Welcome Back</h1>
-                <p className="login-subtitle">
-                    Sign in to access your account and continue your conversations
-                </p>
-                <form onSubmit={handleLogin} className="login-form">
+          <button 
+            onClick={handleBackToChat}
+            className="back-to-chat-button"
+            aria-label="Back to Chat"
+          >
+            ← Back to Chat
+          </button>
+          <div className="login-card">
+            <h1 className="login-title">Welcome Back</h1>
+            <p className="login-subtitle">
+                Sign in to access your account and continue your conversations
+            </p>
+            <form onSubmit={handleLogin} className="login-form">
 
-                    { /* Email section */ }
-                    <div className="form-group">
-                        <label htmlFor="email" className="input-label">Email Address</label>
-                        <input 
-                            id="email"
-                            type="email" 
-                            className="input-field"
-                            placeholder="Enter your email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
+                { /* Email section */ }
+                <div className="form-group">
+                    <label htmlFor="email" className="input-label">Email Address</label>
+                    <input 
+                        id="email"
+                        type="email" 
+                        className="input-field"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
 
                     { /* Password section */ }
                     <div className="form-group">

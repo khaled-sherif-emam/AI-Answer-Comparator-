@@ -84,7 +84,21 @@ export async function getUserTokens(user_id) {
         }
 
         if (!data) {
-            throw new Error('User not found');
+            // If user not found, try to check if guest exists
+            const {data, error} = await supabase
+            .from('guests')
+            .select('available_tokens, allocated_tokens')
+            .eq('guest_id', user_id)
+            .single();
+
+            if (error) {
+                console.error("Error fetching guest's tokens:", error.message);
+                throw error;
+            }
+
+            if (!data) {
+                throw new Error('Guest not found');
+            }
         }
 
         return {
@@ -98,6 +112,40 @@ export async function getUserTokens(user_id) {
         return {
             success: false,
             message: error.message || 'Failed to fetch user tokens',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        };
+    }
+}
+
+// Gets the available and allocated tokens of the guest
+export async function getGuestTokens(guest_id) {
+    try {
+        const { data, error } = await supabase
+            .from('guests')
+            .select('available_tokens, allocated_tokens')
+            .eq('guest_id', guest_id)
+            .single();
+
+        if (error) {
+            console.error("Error fetching guest's tokens:", error.message);
+            throw error;
+        }
+
+        if (!data) {
+            throw new Error('Guest not found');
+        }
+
+        return {
+            success: true,
+            available_tokens: data.available_tokens,
+            allocated_tokens: data.allocated_tokens
+        };  
+        
+    } catch (error) {
+        console.error('Error in getGuestTokens service:', error.message);
+        return {
+            success: false,
+            message: error.message || 'Failed to fetch guest tokens',
             error: process.env.NODE_ENV === 'development' ? error.message : undefined
         };
     }
