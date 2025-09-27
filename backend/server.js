@@ -21,16 +21,25 @@ app.use(cors({
       return callback(null, true);
     }
     
-    // In production, you can restrict to specific origins
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'http://localhost:3002',
-      'http://localhost:3003',
-      // Add production domains here
-    ];
+    // Get allowed origins from environment or use development defaults
+    const allowedOrigins = process.env.ALLOWED_ORIGINS
+      ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+      : [
+          'http://localhost:3000',
+          'http://localhost:3001',
+          'http://localhost:3002',
+          'http://localhost:3003',
+          'https://ai-multichat-website.vercel.app', // Your Vercel frontend URL
+          'https://ai-multichat-*.vercel.app' // Wildcard for preview deployments
+        ];
     
-    if (allowedOrigins.includes(origin)) {
+    // Allow if origin matches any allowed origin or if in development
+    if (allowedOrigins.includes(origin) || 
+        allowedOrigins.some(allowed => 
+          allowed.includes('*') && 
+          new RegExp('^' + allowed.replace(/\*/g, '.*') + '$').test(origin)
+        ) ||
+        process.env.NODE_ENV === 'development') {
       return callback(null, true);
     }
     
