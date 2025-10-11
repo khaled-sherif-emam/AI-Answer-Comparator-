@@ -2,7 +2,7 @@
 A web app that lets users chat with multiple AI chatbots simultaneously. Responses can be viewed side by side or slide by slide, and the chatbots can also interact with each other to produce a collaborative joint answer.
 
 ### How to use:
-Step 1: visit [Promptly](https://ai-multichat-demo-95k3-fwcwl8kcx-khaled-sherif-emams-projects.vercel.app/chat/Chat)
+Step 1: visit [Promptly](ai-multichat-project-demo.vercel.app)
 
 Step 2: Choose to either Login, Signup or Continue as Guest.  
 
